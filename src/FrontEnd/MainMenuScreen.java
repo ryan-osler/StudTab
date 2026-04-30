@@ -33,6 +33,7 @@ public class MainMenuScreen extends javax.swing.JFrame {
         lblProfilePic.setIcon(icon);
         btnViewTimetable.setBorder(BorderFactory.createEmptyBorder(10, 20, 10, 20));//rounded edges
     }
+    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -54,6 +55,7 @@ public class MainMenuScreen extends javax.swing.JFrame {
         lblDOB = new javax.swing.JLabel();
         lblGrade = new javax.swing.JLabel();
         lblProfilePic = new javax.swing.JLabel();
+        btnAddStudent = new javax.swing.JButton();
         lblBackground = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -72,13 +74,13 @@ public class MainMenuScreen extends javax.swing.JFrame {
         });
         getContentPane().add(btnViewTimetable, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 90, 177, 50));
 
-        btnLogout.setText("jButton1");
+        btnLogout.setText("Logout");
         btnLogout.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnLogoutActionPerformed(evt);
             }
         });
-        getContentPane().add(btnLogout, new org.netbeans.lib.awtextra.AbsoluteConstraints(620, 370, 50, 50));
+        getContentPane().add(btnLogout, new org.netbeans.lib.awtextra.AbsoluteConstraints(590, 370, 80, 50));
 
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
@@ -128,6 +130,14 @@ public class MainMenuScreen extends javax.swing.JFrame {
 
         jPanel1.add(pnlDetails, new org.netbeans.lib.awtextra.AbsoluteConstraints(570, 60, 190, 210));
 
+        btnAddStudent.setText("Add Student");
+        btnAddStudent.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAddStudentActionPerformed(evt);
+            }
+        });
+        jPanel1.add(btnAddStudent, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 170, -1, -1));
+
         lblBackground.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/loginBackground.png"))); // NOI18N
         jPanel1.add(lblBackground, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 800, 450));
 
@@ -154,6 +164,12 @@ public class MainMenuScreen extends javax.swing.JFrame {
         ls.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btnLogoutActionPerformed
+
+    private void btnAddStudentActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddStudentActionPerformed
+        AddUserScreen as = new AddUserScreen(this);
+        as.setVisible(true);
+        this.setVisible(false);
+    }//GEN-LAST:event_btnAddStudentActionPerformed
 
     /**
      * @param args the command line arguments
@@ -191,6 +207,7 @@ public class MainMenuScreen extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnAddStudent;
     private javax.swing.JButton btnLogout;
     private javax.swing.JButton btnViewTimetable;
     private javax.swing.JLabel jLabel1;

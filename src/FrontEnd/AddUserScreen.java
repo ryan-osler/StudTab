@@ -26,7 +26,17 @@ public class AddUserScreen extends javax.swing.JFrame {
     /**
      * Creates new form AddUserScreen
      */
-    public AddUserScreen() {
+    private MainMenuScreen mainMenu;
+    public AddUserScreen(MainMenuScreen mm) {
+        initComponents();
+        setLocationRelativeTo(null);
+        dragDropSetup();
+        TimetableManager.setSchoolCode("SJC001");
+        btnSetup();
+        this.mainMenu = mm;
+    }
+    
+    public AddUserScreen(){
         initComponents();
         setLocationRelativeTo(null);
         dragDropSetup();
@@ -248,6 +258,11 @@ public class AddUserScreen extends javax.swing.JFrame {
         btnMainMenu.setText("Main Menu");
         btnMainMenu.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(47, 56, 120)));
         btnMainMenu.setContentAreaFilled(false);
+        btnMainMenu.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnMainMenuActionPerformed(evt);
+            }
+        });
         jPanel1.add(btnMainMenu, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 450, 100, -1));
 
         txfBackground.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/loginBackground.png"))); // NOI18N
@@ -293,6 +308,11 @@ public class AddUserScreen extends javax.swing.JFrame {
         }
         
     }//GEN-LAST:event_btnAddUserActionPerformed
+
+    private void btnMainMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMainMenuActionPerformed
+        mainMenu.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_btnMainMenuActionPerformed
 
     /**
      * @param args the command line arguments
