@@ -186,7 +186,7 @@ public class LoginScreen extends javax.swing.JFrame {
         jPanel1.add(lblError, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 250, 370, 20));
 
         lblBackGround.setBackground(new java.awt.Color(240, 240, 240));
-        lblBackGround.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images&Icons/loginBackground.png"))); // NOI18N
+        lblBackGround.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/loginBackground.png"))); // NOI18N
         jPanel1.add(lblBackGround, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 480, 320));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());

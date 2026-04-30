@@ -28,7 +28,7 @@ public class MainMenuScreen extends javax.swing.JFrame {
         lblStudentName.setText(UserManager.getCurrentUser().getName()+" "+UserManager.getCurrentUser().getSurname());
         lblDOB.setText(UserManager.getCurrentUser().getDOB());
         lblGrade.setText(String.valueOf(UserManager.getCurrentUser().getGrade()));
-        String path = "src/Images&Icons/" + UserManager.getCurrentUser().getEmail() + ".jpg";
+        String path = "src/Images/" + UserManager.getCurrentUser().getEmail() + ".jpg";
         ImageIcon icon = new ImageIcon(path);
         lblProfilePic.setIcon(icon);
         btnViewTimetable.setBorder(BorderFactory.createEmptyBorder(10, 20, 10, 20));//rounded edges
@@ -59,12 +59,12 @@ public class MainMenuScreen extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        btnViewTimetable.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images&Icons/btnViewTimetable.png"))); // NOI18N
+        btnViewTimetable.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/btnViewTimetable.png"))); // NOI18N
         btnViewTimetable.setBorderPainted(false);
         btnViewTimetable.setContentAreaFilled(false);
         btnViewTimetable.setFocusPainted(false);
-        btnViewTimetable.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/Images&Icons/btnRollViewTimetable.png"))); // NOI18N
-        btnViewTimetable.setSelectedIcon(new javax.swing.ImageIcon(getClass().getResource("/Images&Icons/btnViewTimetable.png"))); // NOI18N
+        btnViewTimetable.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/btnRollViewTimetable.png"))); // NOI18N
+        btnViewTimetable.setSelectedIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/btnViewTimetable.png"))); // NOI18N
         btnViewTimetable.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnViewTimetableActionPerformed(evt);
@@ -122,12 +122,13 @@ public class MainMenuScreen extends javax.swing.JFrame {
         lblGrade.setText("jLabel4");
         pnlDetails.add(lblGrade, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 50, 90, -1));
 
+        lblProfilePic.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/26344@stjohnscollege.co.za.jpg"))); // NOI18N
         lblProfilePic.setText("jLabel3");
         pnlDetails.add(lblProfilePic, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 80, 170, 120));
 
         jPanel1.add(pnlDetails, new org.netbeans.lib.awtextra.AbsoluteConstraints(570, 60, 190, 210));
 
-        lblBackground.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images&Icons/loginBackground2.png"))); // NOI18N
+        lblBackground.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/loginBackground.png"))); // NOI18N
         jPanel1.add(lblBackground, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 800, 450));
 
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));

@@ -225,7 +225,7 @@
               <Color blue="f0" green="f0" red="f0" type="rgb"/>
             </Property>
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-              <Image iconType="3" name="/Images&amp;Icons/loginBackground.png"/>
+              <Image iconType="3" name="/Images/loginBackground.png"/>
             </Property>
           </Properties>
           <Constraints>

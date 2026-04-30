@@ -160,7 +160,7 @@ public class TimetableScreen extends javax.swing.JFrame {
 
         jPanel1.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 60, 610, 380));
 
-        lblBackground.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images&Icons/loginBackground.png"))); // NOI18N
+        lblBackground.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/loginBackground.png"))); // NOI18N
         lblBackground.setText("jLabel1");
         jPanel1.add(lblBackground, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 890, 490));
 
