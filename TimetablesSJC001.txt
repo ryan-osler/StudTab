@@ -1,0 +1,5 @@
+1#26344@stjohnscollege.co.za#1#Math%Chem%Afrikaans%Art%Geo%IT1%free
+2#26344@stjohnscollege.co.za#2#Math%Chem%Afrikaans%Art%Geo%IT2%Math
+3#26344@stjohnscollege.co.za#3#Math%Chem%Afrikaans%Art%Geo%IT3%Afrikaans
+4#26344@stjohnscollege.co.za#4#Math%Chem%Afrikaans%Art%Geo%IT4%Art
+5#26344@stjohnscollege.co.za#5#Math%Chem%Afrikaans%Art%Geo%IT5%Physics
