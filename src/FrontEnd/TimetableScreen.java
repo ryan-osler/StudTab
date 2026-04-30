@@ -152,8 +152,6 @@ public class TimetableScreen extends javax.swing.JFrame {
         tblTimetable.setRowSelectionAllowed(false);
         tblTimetable.setSelectionBackground(new java.awt.Color(255, 255, 255));
         tblTimetable.setShowGrid(true);
-        tblTimetable.setShowHorizontalLines(true);
-        tblTimetable.setShowVerticalLines(true);
         jScrollPane1.setViewportView(tblTimetable);
 
         jPanel2.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 610, 380));

@@ -161,7 +161,7 @@ public class LoginScreen extends javax.swing.JFrame {
         btnLogin.setFont(new java.awt.Font("Tw Cen MT Condensed Extra Bold", 0, 18)); // NOI18N
         btnLogin.setForeground(new java.awt.Color(47, 56, 120));
         btnLogin.setText("Login");
-        btnLogin.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        btnLogin.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(47, 56, 120)));
         btnLogin.setContentAreaFilled(false);
         btnLogin.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {

@@ -89,4 +89,7 @@ public class TimetableManager {
         }
         return null;
     }
+    public static String getSchoolCode(){
+        return schoolCode;
+    }
 }
