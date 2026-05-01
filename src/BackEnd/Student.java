@@ -56,4 +56,7 @@ public class Student {
     public String printStudent(){
         return name+"#"+surname+"#"+email+"#"+password+"#"+DOB.format(DateTimeFormatter.ofPattern("dd-MM-yyyy"))+"#"+isAdmin+"#"+grade;
     }
+    public boolean getIsAdmin(){
+        return isAdmin;
+    }
 }

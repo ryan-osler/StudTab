@@ -37,6 +37,15 @@ public class LoginScreen extends javax.swing.JFrame {
         setLocationRelativeTo(null);
         
     }
+    
+    public boolean validation(){
+        if (txfEmail.getText().isEmpty() || psfPassword.getPassword().length == 0 || txfSchoolCode.getText().isEmpty()) {
+            lblError.setText("Missing Info");
+            return false;
+        }
+        return true;
+    }
+    
     public void autoLogin(){
         if (checkPrevInfo()) {
             lblError.setForeground(Color.GREEN);
@@ -135,8 +144,8 @@ public class LoginScreen extends javax.swing.JFrame {
 
         lblSchoolCode.setFont(new java.awt.Font("Tw Cen MT Condensed Extra Bold", 0, 18)); // NOI18N
         lblSchoolCode.setForeground(new java.awt.Color(47, 56, 120));
-        lblSchoolCode.setText("School Code");
-        jPanel1.add(lblSchoolCode, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 160, 80, -1));
+        lblSchoolCode.setText(" School Code");
+        jPanel1.add(lblSchoolCode, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 160, 90, -1));
 
         txfEmail.setBackground(new java.awt.Color(240, 240, 240));
         txfEmail.addActionListener(new java.awt.event.ActionListener() {
@@ -212,40 +221,41 @@ public class LoginScreen extends javax.swing.JFrame {
     }//GEN-LAST:event_txfSchoolCodeActionPerformed
 
     private void btnLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLoginActionPerformed
-
+        if (validation()) {
         String schoolCode = txfSchoolCode.getText();
-        if (UserManager.loadInfo(schoolCode)) {
-            String email = txfEmail.getText();
-            String password = String.valueOf(psfPassword.getPassword());
-            
-            Student User = UserManager.checkInfo(email, password, schoolCode);
-            if (User == null) {
-                ///
-                lblError.setText("Incorrect Email or Password");
-            }else{
-                lblError.setForeground(Color.GREEN);
-                lblError.setText("Valid");
-                UserManager.setCurrentUser(User);
-                TimetableManager.setCurrentUser(User);
-                TimetableManager.setSchoolCode(schoolCode);
+            if (UserManager.loadInfo(schoolCode)) {
+                String email = txfEmail.getText();
+                String password = String.valueOf(psfPassword.getPassword());
                 
-                try {
-                    FileWriter prevLogin = new FileWriter("PrevLogin.txt");
-                    String temp;
-                    temp = LocalDate.now().format(DateTimeFormatter.ofPattern("dd-MM-yyyy"))+"#"+schoolCode+"\n"+User.printStudent();
-                    prevLogin.write(temp);
-                    prevLogin.close();
+                Student User = UserManager.checkInfo(email, password, schoolCode);
+                if (User == null) {
+                    ///
+                    lblError.setText("Incorrect Email or Password");
+                }else{
+                    lblError.setForeground(Color.GREEN);
+                    lblError.setText("Valid");
+                    UserManager.setCurrentUser(User);
+                    TimetableManager.setCurrentUser(User);
+                    TimetableManager.setSchoolCode(schoolCode);
                     
-                } catch (IOException ex) {
-                    Logger.getLogger(LoginScreen.class.getName()).log(Level.SEVERE, null, ex);
-                }
+                    try {
+                        FileWriter prevLogin = new FileWriter("PrevLogin.txt");
+                        String temp;
+                        temp = LocalDate.now().format(DateTimeFormatter.ofPattern("dd-MM-yyyy"))+"#"+schoolCode+"\n"+User.printStudent();
+                        prevLogin.write(temp);
+                        prevLogin.close();
+                    
+                    } catch (IOException ex) {
+                        Logger.getLogger(LoginScreen.class.getName()).log(Level.SEVERE, null, ex);
+                    }
                 
-                MainMenuScreen mm = new MainMenuScreen();
-                mm.setVisible(true);
-                this.dispose();
+                    MainMenuScreen mm = new MainMenuScreen();
+                    mm.setVisible(true);
+                    this.dispose();
+                }
+            }else{
+                lblError.setText("Couldn't Locate User File");
             }
-        }else{
-            lblError.setText("Couldn't Locate User File");
         }
     }//GEN-LAST:event_btnLoginActionPerformed
     public String getSchoolCode(){

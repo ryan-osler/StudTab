@@ -4,6 +4,7 @@
  */
 package FrontEnd;
 
+import BackEnd.TimetableManager;
 import BackEnd.UserManager;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -32,6 +33,10 @@ public class MainMenuScreen extends javax.swing.JFrame {
         ImageIcon icon = new ImageIcon(path);
         lblProfilePic.setIcon(icon);
         btnViewTimetable.setBorder(BorderFactory.createEmptyBorder(10, 20, 10, 20));//rounded edges
+        if (!UserManager.getCurrentUser().getIsAdmin()) {
+            btnAddStudent.setEnabled(false);
+            btnAddStudent.setVisible(false);
+        }
     }
     
 
