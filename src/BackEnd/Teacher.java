@@ -21,6 +21,6 @@ public class Teacher extends Student
         return subject;
     }
     public String printTeacher(){
-        return name+"#"+surname+"#"+email+"#"+password+"#"+DOB.format(DateTimeFormatter.ofPattern("dd-MM-yyyy"))+"#"+isAdmin+-1+subject;
+        return name+"#"+surname+"#"+email+"#"+password+"#"+DOB.format(DateTimeFormatter.ofPattern("dd-MM-yyyy"))+"#"+isAdmin+"#-1#"+subject;
     }
 }

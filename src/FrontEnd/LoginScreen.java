@@ -17,6 +17,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.Period;
 import java.time.format.DateTimeFormatter;
+import java.time.temporal.ChronoUnit;
 import java.util.NoSuchElementException;
 import java.util.Scanner;
 import java.util.logging.Level;
@@ -39,8 +40,19 @@ public class LoginScreen extends javax.swing.JFrame {
     }
     
     public boolean validation(){
+        String emailRegex = "^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}$";
         if (txfEmail.getText().isEmpty() || psfPassword.getPassword().length == 0 || txfSchoolCode.getText().isEmpty()) {
             lblError.setText("Missing Info");
+            return false;
+        } else if (!txfEmail.getText().matches(emailRegex)) {
+            lblError.setText("Incorrect Email Format");
+            return false;
+        } else if (txfSchoolCode.getText().trim().length() != 6) {
+            lblError.setText("Code Length must be 6");
+            return false;
+        } else if (!txfSchoolCode.getText().trim().substring(0,3).matches("^[A-Za-z]+$")
+                || !txfSchoolCode.getText().trim().substring(3).matches("^[0-9]+$")) {
+            lblError.setText("Incorrect Code Format \"AAA000\"");
             return false;
         }
         return true;
@@ -49,7 +61,7 @@ public class LoginScreen extends javax.swing.JFrame {
     public void autoLogin(){
         if (checkPrevInfo()) {
             lblError.setForeground(Color.GREEN);
-            lblError.setText("Valid");
+            lblError.setText("Valid Prev Login");
             
             UserManager.setCurrentUser(user);
             TimetableManager.setCurrentUser(user);
@@ -63,7 +75,7 @@ public class LoginScreen extends javax.swing.JFrame {
     }
     private boolean checkPrevInfo(){
         try{
-            Scanner scFile = new Scanner(new File("PrevLogin.txt")).useDelimiter("#");
+            Scanner scFile = new Scanner(new File("PrevLogin.txt"));
             String line1 = scFile.nextLine();
             String line2 = scFile.nextLine();
             
@@ -72,7 +84,8 @@ public class LoginScreen extends javax.swing.JFrame {
             LocalDate prevLoginDate = LocalDate.parse(first[0], DateTimeFormatter.ofPattern("dd-MM-yyyy"));
             schoolcode = first[1];
             
-            int prevLogin = Period.between(prevLoginDate, LocalDate.now()).getDays();
+            long prevLogin = ChronoUnit.DAYS.between(prevLoginDate, LocalDate.now());
+            System.out.println("Days since last login: " + prevLogin);
             if (prevLogin < 30) {
                 String[] second = line2.split("#");
                 String name = second[0];
@@ -240,8 +253,13 @@ public class LoginScreen extends javax.swing.JFrame {
                     
                     try {
                         FileWriter prevLogin = new FileWriter("PrevLogin.txt");
-                        String temp;
-                        temp = LocalDate.now().format(DateTimeFormatter.ofPattern("dd-MM-yyyy"))+"#"+schoolCode+"\n"+User.printStudent();
+                        String temp = "";
+                        if (User instanceof Teacher) {
+                            temp = LocalDate.now().format(DateTimeFormatter.ofPattern("dd-MM-yyyy"))+"#"+schoolCode+"\n"+((Teacher) User).printTeacher();
+                        }else{
+                            temp = LocalDate.now().format(DateTimeFormatter.ofPattern("dd-MM-yyyy"))+"#"+schoolCode+"\n"+User.printStudent();
+                        }
+                        
                         prevLogin.write(temp);
                         prevLogin.close();
                     
