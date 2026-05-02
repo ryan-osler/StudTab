@@ -18,7 +18,7 @@ public class UserManager {
     public static boolean loaded = false;
     private static Student currentUser;
     
-    private static int countUsers(String inSchoolCode){
+    public static int countUsers(String inSchoolCode){
         int count = 0;
         try{
             Scanner scFile = new Scanner(new File("Users"+inSchoolCode+".txt"));

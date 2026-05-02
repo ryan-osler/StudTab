@@ -29,10 +29,10 @@ public class Student {
         password = inPassword;
         DOB = LocalDate.parse(inDOB, DateTimeFormatter.ofPattern("dd-MM-yyyy"));
         grade = inGrade;
-        getAge();
+        calculateAge();
         isAdmin = inAdmin;
     }
-    private void getAge(){
+    private void calculateAge(){
         age = Period.between(DOB, LocalDate.now()).getYears();
     }
     public String getEmail(){

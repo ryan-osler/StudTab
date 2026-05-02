@@ -50,7 +50,6 @@ public class MainMenuScreen extends javax.swing.JFrame {
     private void initComponents() {
 
         btnViewTimetable = new javax.swing.JButton();
-        btnLogout = new javax.swing.JButton();
         jPanel1 = new javax.swing.JPanel();
         lblTitle = new javax.swing.JLabel();
         pnlDetails = new javax.swing.JPanel();
@@ -61,6 +60,7 @@ public class MainMenuScreen extends javax.swing.JFrame {
         lblGrade = new javax.swing.JLabel();
         lblProfilePic = new javax.swing.JLabel();
         btnAddStudent = new javax.swing.JButton();
+        btnLogout = new javax.swing.JButton();
         lblBackground = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -78,14 +78,6 @@ public class MainMenuScreen extends javax.swing.JFrame {
             }
         });
         getContentPane().add(btnViewTimetable, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 90, 177, 50));
-
-        btnLogout.setText("Logout");
-        btnLogout.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnLogoutActionPerformed(evt);
-            }
-        });
-        getContentPane().add(btnLogout, new org.netbeans.lib.awtextra.AbsoluteConstraints(590, 370, 80, 50));
 
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
@@ -135,13 +127,32 @@ public class MainMenuScreen extends javax.swing.JFrame {
 
         jPanel1.add(pnlDetails, new org.netbeans.lib.awtextra.AbsoluteConstraints(570, 60, 190, 210));
 
-        btnAddStudent.setText("Add Student");
+        btnAddStudent.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/btnAddStudent.png"))); // NOI18N
+        btnAddStudent.setBorderPainted(false);
+        btnAddStudent.setContentAreaFilled(false);
+        btnAddStudent.setFocusPainted(false);
+        btnAddStudent.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/btnRolAddStudent.png"))); // NOI18N
+        btnAddStudent.setSelectedIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/btnAddStudent.png"))); // NOI18N
         btnAddStudent.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnAddStudentActionPerformed(evt);
             }
         });
-        jPanel1.add(btnAddStudent, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 170, -1, -1));
+        jPanel1.add(btnAddStudent, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 170, 177, 50));
+
+        btnLogout.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/btnLogout.png"))); // NOI18N
+        btnLogout.setBorder(null);
+        btnLogout.setBorderPainted(false);
+        btnLogout.setContentAreaFilled(false);
+        btnLogout.setFocusPainted(false);
+        btnLogout.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/btnRollLogout.png"))); // NOI18N
+        btnLogout.setSelectedIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/btnLogout.png"))); // NOI18N
+        btnLogout.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnLogoutActionPerformed(evt);
+            }
+        });
+        jPanel1.add(btnLogout, new org.netbeans.lib.awtextra.AbsoluteConstraints(730, 380, 50, 50));
 
         lblBackground.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/loginBackground.png"))); // NOI18N
         jPanel1.add(lblBackground, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 800, 450));
@@ -171,8 +182,8 @@ public class MainMenuScreen extends javax.swing.JFrame {
     }//GEN-LAST:event_btnLogoutActionPerformed
 
     private void btnAddStudentActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddStudentActionPerformed
-        AddUserScreen as = new AddUserScreen(this);
-        as.setVisible(true);
+        ManageStudentsScreen ms  = new ManageStudentsScreen(this);
+        ms.setVisible(true);
         this.setVisible(false);
     }//GEN-LAST:event_btnAddStudentActionPerformed
 
