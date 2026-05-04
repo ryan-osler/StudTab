@@ -72,6 +72,62 @@ public class ManageStudentsScreen extends javax.swing.JFrame {
                 
             }
         });
+        btnAddStudent.addMouseListener(new java.awt.event.MouseAdapter() {
+            @Override
+            public void mouseEntered(java.awt.event.MouseEvent evt){
+                btnAddStudent.setForeground(Color.WHITE);
+                btnAddStudent.setBorder(new LineBorder(Color.WHITE));
+            }
+            @Override
+            public void mouseExited(java.awt.event.MouseEvent evt){
+                btnAddStudent.setForeground(norm);
+                btnAddStudent.setBorder(new LineBorder(norm));
+            }
+            @Override
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                btnAddStudent.setForeground(norm);
+                btnAddStudent.setBorder(new LineBorder(norm));
+            }
+            @Override
+            public void mouseReleased(java.awt.event.MouseEvent evt){
+                if (btnAddStudent.contains(evt.getPoint())) {
+                    btnAddStudent.setForeground(Color.WHITE);
+                    btnAddStudent.setBorder(new LineBorder(Color.WHITE));
+                }else{
+                    btnAddStudent.setForeground(norm);
+                    btnAddStudent.setBorder(new LineBorder(norm));
+                }
+                
+            }
+        });
+        btnMainMenu.addMouseListener(new java.awt.event.MouseAdapter() {
+            @Override
+            public void mouseEntered(java.awt.event.MouseEvent evt){
+                btnMainMenu.setForeground(Color.WHITE);
+                btnMainMenu.setBorder(new LineBorder(Color.WHITE));
+            }
+            @Override
+            public void mouseExited(java.awt.event.MouseEvent evt){
+                btnMainMenu.setForeground(norm);
+                btnMainMenu.setBorder(new LineBorder(norm));
+            }
+            @Override
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                btnMainMenu.setForeground(norm);
+                btnMainMenu.setBorder(new LineBorder(norm));
+            }
+            @Override
+            public void mouseReleased(java.awt.event.MouseEvent evt){
+                if (btnMainMenu.contains(evt.getPoint())) {
+                    btnMainMenu.setForeground(Color.WHITE);
+                    btnMainMenu.setBorder(new LineBorder(Color.WHITE));
+                }else{
+                    btnMainMenu.setForeground(norm);
+                    btnMainMenu.setBorder(new LineBorder(norm));
+                }
+                
+            }
+        });
     }
     private void loadTblStudents(){
         DefaultTableModel model = (DefaultTableModel) tblStudents.getModel();
@@ -262,6 +318,8 @@ public class ManageStudentsScreen extends javax.swing.JFrame {
         lblDOB = new javax.swing.JLabel();
         lblGrade = new javax.swing.JLabel();
         btnSave = new javax.swing.JButton();
+        btnAddStudent = new javax.swing.JButton();
+        btnMainMenu = new javax.swing.JButton();
         lblBackground = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -361,7 +419,36 @@ public class ManageStudentsScreen extends javax.swing.JFrame {
         btnSave.setText("Save");
         btnSave.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(47, 56, 120)));
         btnSave.setContentAreaFilled(false);
+        btnSave.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSaveActionPerformed(evt);
+            }
+        });
         jPanel1.add(btnSave, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 530, 70, -1));
+
+        btnAddStudent.setFont(new java.awt.Font("Tw Cen MT Condensed Extra Bold", 0, 18)); // NOI18N
+        btnAddStudent.setForeground(new java.awt.Color(47, 56, 120));
+        btnAddStudent.setText("Add Student");
+        btnAddStudent.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(47, 56, 120)));
+        btnAddStudent.setContentAreaFilled(false);
+        btnAddStudent.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAddStudentActionPerformed(evt);
+            }
+        });
+        jPanel1.add(btnAddStudent, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 450, 90, -1));
+
+        btnMainMenu.setFont(new java.awt.Font("Tw Cen MT Condensed Extra Bold", 0, 18)); // NOI18N
+        btnMainMenu.setForeground(new java.awt.Color(47, 56, 120));
+        btnMainMenu.setText("Main Menu");
+        btnMainMenu.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(47, 56, 120)));
+        btnMainMenu.setContentAreaFilled(false);
+        btnMainMenu.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnMainMenuActionPerformed(evt);
+            }
+        });
+        jPanel1.add(btnMainMenu, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 480, 90, -1));
 
         lblBackground.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/loginBackground.png"))); // NOI18N
         lblBackground.setText("jLabel1");
@@ -383,6 +470,21 @@ public class ManageStudentsScreen extends javax.swing.JFrame {
             loadTblStudents(txfSearchStudent.getText());
         }
     }//GEN-LAST:event_txfSearchStudentKeyReleased
+
+    private void btnAddStudentActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddStudentActionPerformed
+        AddUserScreen as  = new AddUserScreen(mainMenu);
+        as.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_btnAddStudentActionPerformed
+
+    private void btnMainMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMainMenuActionPerformed
+        mainMenu.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_btnMainMenuActionPerformed
+
+    private void btnSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveActionPerformed
+        
+    }//GEN-LAST:event_btnSaveActionPerformed
 
     /**
      * @param args the command line arguments
@@ -420,6 +522,8 @@ public class ManageStudentsScreen extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnAddStudent;
+    private javax.swing.JButton btnMainMenu;
     private javax.swing.JButton btnSave;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;

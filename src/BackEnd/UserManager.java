@@ -7,7 +7,11 @@ package BackEnd;
 import FrontEnd.LoginScreen;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.Scanner;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -88,5 +92,23 @@ public class UserManager {
     }
     public static Student getCurrentUser(){
         return currentUser;
+    }
+    public static void updateFile(){
+        String temp = "";
+        for (int i = 0; i < countUsers(TimetableManager.getSchoolCode()); i++) {
+            if (userArr[i] instanceof Teacher) {
+                temp+= ((Teacher) userArr[i]).printTeacher()+"\n";
+            } else{
+                temp += userArr[i].printStudent()+"\n";
+            }
+        }
+        try {
+            FileWriter outFile = new FileWriter("Users"+TimetableManager.getSchoolCode()+".txt");
+            outFile.write(temp);
+            outFile.close();
+            System.out.println("Updated Users");
+        } catch (IOException ex) {
+            Logger.getLogger(UserManager.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 }
