@@ -48,7 +48,7 @@ public class Student {
         return surname;
     }
     public String getDOB(){
-        return DOB.toString();
+        return DOB.format(DateTimeFormatter.ofPattern("dd-MM-yyyy"));
     }
     public int getGrade(){
         return grade;

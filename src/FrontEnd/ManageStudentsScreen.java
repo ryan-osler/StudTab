@@ -4,10 +4,14 @@
  */
 package FrontEnd;
 
+import BackEnd.Student;
 import BackEnd.Teacher;
 import BackEnd.TimetableManager;
 import BackEnd.UserManager;
 import java.awt.Color;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import javax.swing.border.LineBorder;
 import javax.swing.table.DefaultTableModel;
 
@@ -31,6 +35,7 @@ public class ManageStudentsScreen extends javax.swing.JFrame {
         setTblStudents();
         loadTblStudents();
         setLocationRelativeTo(null);
+        lblError.setText("");
     }
     public ManageStudentsScreen(){
         initComponents();
@@ -40,6 +45,7 @@ public class ManageStudentsScreen extends javax.swing.JFrame {
         };
         setTblStudents();
         loadTblStudents();
+        lblError.setText("");
     }
     
     private void btnSetup(){//hovver effect for buttons. this shiz took so long
@@ -289,6 +295,38 @@ public class ManageStudentsScreen extends javax.swing.JFrame {
             return "Edit";
         }
     }
+    
+    private boolean validateEdit(){
+        if (txfEmail.getText().isEmpty() || txfName.getText().isEmpty()|| txfSurname.getText().isEmpty()
+                || txfPassword.getText().isEmpty() || txfDOB.getText().isEmpty() || txfGrade.getText().isEmpty()) {
+            lblError.setForeground(Color.RED);
+            lblError.setText("Missing Information");
+            return false;
+        } else if (txfPassword.getText().contains("#") || txfName.getText().contains("#") || txfSurname.getText().contains("#")) {
+            lblError.setForeground(Color.RED);
+            lblError.setText("Nothing may contain '#'");
+            return false;
+        }else if (txfPassword.getText().length()<4 || txfPassword.getText().length() >=15) {
+            lblError.setForeground(Color.RED);
+            lblError.setText("Password must be between 5 and 15 characters");
+            return false;
+        }
+        try{
+            LocalDate temp = LocalDate.parse(txfDOB.getText(), DateTimeFormatter.ofPattern("dd-MM-yyyy"));
+            int temp2 = Integer.parseInt(txfGrade.getText());
+        } catch(DateTimeParseException f){
+            lblError.setForeground(Color.RED);
+            lblError.setText("Incorrect Date Time Fomrat");
+            return false;
+        } catch (NumberFormatException f){
+            lblError.setForeground(Color.RED);
+            lblError.setText("Grade must be an integer");
+            return false;
+        }
+        lblError.setForeground(Color.GREEN);
+        lblError.setText("User Updated");
+        return true;
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -320,6 +358,7 @@ public class ManageStudentsScreen extends javax.swing.JFrame {
         btnSave = new javax.swing.JButton();
         btnAddStudent = new javax.swing.JButton();
         btnMainMenu = new javax.swing.JButton();
+        lblError = new javax.swing.JLabel();
         lblBackground = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -450,6 +489,11 @@ public class ManageStudentsScreen extends javax.swing.JFrame {
         });
         jPanel1.add(btnMainMenu, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 480, 90, -1));
 
+        lblError.setForeground(new java.awt.Color(204, 0, 0));
+        lblError.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblError.setText("lblError");
+        jPanel1.add(lblError, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 510, 260, -1));
+
         lblBackground.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/loginBackground.png"))); // NOI18N
         lblBackground.setText("jLabel1");
         jPanel1.add(lblBackground, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1024, -1));
@@ -483,7 +527,11 @@ public class ManageStudentsScreen extends javax.swing.JFrame {
     }//GEN-LAST:event_btnMainMenuActionPerformed
 
     private void btnSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveActionPerformed
-        
+        if (validateEdit()) {
+            Student temp = new Student(txfName.getText(), txfSurname.getText(), txfEmail.getText()
+                , txfPassword.getText(), txfDOB.getText(), Integer.parseInt(txfGrade.getText()), false);
+            UserManager.editUser(temp);
+        }
     }//GEN-LAST:event_btnSaveActionPerformed
 
     /**
@@ -532,6 +580,7 @@ public class ManageStudentsScreen extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel lblBackground;
     private javax.swing.JLabel lblDOB;
+    private javax.swing.JLabel lblError;
     private javax.swing.JLabel lblGrade;
     private javax.swing.JLabel lblName;
     private javax.swing.JLabel lblPassword;

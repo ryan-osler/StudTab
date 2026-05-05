@@ -4,6 +4,8 @@
  */
 package FrontEnd;
 
+import BackEnd.Student;
+import BackEnd.Teacher;
 import BackEnd.TimetableManager;
 import BackEnd.UserManager;
 import java.awt.Color;
@@ -34,6 +36,7 @@ public class AddUserScreen extends javax.swing.JFrame {
         TimetableManager.setSchoolCode("SJC001");
         btnSetup();
         this.mainMenu = mm;
+        lblError.setText("");
     }
     
     public AddUserScreen(){
@@ -42,6 +45,7 @@ public class AddUserScreen extends javax.swing.JFrame {
         dragDropSetup();
         TimetableManager.setSchoolCode("SJC001");
         btnSetup();
+        lblError.setText("");
     }
     private void btnSetup(){//hovver effect for buttons. this shiz took so long
         Color norm = new Color(47,56,120);
@@ -152,6 +156,7 @@ public class AddUserScreen extends javax.swing.JFrame {
         pnlFile = new javax.swing.JPanel();
         btnAddUser = new javax.swing.JButton();
         btnMainMenu = new javax.swing.JButton();
+        lblError = new javax.swing.JLabel();
         txfBackground = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -265,6 +270,10 @@ public class AddUserScreen extends javax.swing.JFrame {
         });
         jPanel1.add(btnMainMenu, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 450, 100, -1));
 
+        lblError.setForeground(new java.awt.Color(204, 0, 0));
+        lblError.setText("jLabel1");
+        jPanel1.add(lblError, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 500, 120, -1));
+
         txfBackground.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/loginBackground.png"))); // NOI18N
         txfBackground.setText("Background Icon");
         jPanel1.add(txfBackground, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 930, 550));
@@ -287,25 +296,15 @@ public class AddUserScreen extends javax.swing.JFrame {
     }//GEN-LAST:event_txfPasswordActionPerformed
 
     private void btnAddUserActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddUserActionPerformed
-        try {
-            FileWriter outFile = new FileWriter("Users"+TimetableManager.getSchoolCode()+".txt",true);
-            outFile.write("\n");
-            if (cbxIsTeacher.isSelected()) {
-                outFile.write(txfName.getText() +"#"+ txfSurname.getText() +"#"+ txfEmail.getText() +"#"+ txfPassword.getText() +"#"+ txfDOB.getText() +"#true#-1#"+ txfGrSub.getText());
-            }else{
-                outFile.write(txfName.getText() +"#"+ txfSurname.getText() +"#"+ txfEmail.getText() +"#"+ txfPassword.getText() +"#"+ txfDOB.getText() +"#false#" +txfGrSub.getText());
-            }
-            outFile.close();
-            txfName.setText("");
-            txfSurname.setText("");
-            txfEmail.setText("");
-            txfPassword.setText("");
-            txfDOB.setText("dd-MM-yyyy");
-            txfGrSub.setText("");
-            cbxIsTeacher.setSelected(false);
-        } catch (IOException ex) {
-            Logger.getLogger(AddUserScreen.class.getName()).log(Level.SEVERE, null, ex);
+        Student temp;
+        if (cbxIsTeacher.isSelected()) {
+            temp = new Teacher(txfName.getText(), txfSurname.getText(), txfEmail.getText(), txfPassword.getText(), txfDOB.getText(), -1, true, txfGrSub.getText());
+        } else{
+            temp = new Student(txfName.getText(), txfSurname.getText(), txfEmail.getText(), txfPassword.getText(), txfDOB.getText(), Integer.parseInt(txfGrSub.getText()), false);
         }
+        UserManager.addUser(temp);
+        lblError.setForeground(Color.GREEN);
+        lblError.setText("UserAdded");
         
     }//GEN-LAST:event_btnAddUserActionPerformed
 
@@ -356,6 +355,7 @@ public class AddUserScreen extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JLabel lblDOB;
     private javax.swing.JLabel lblEmail;
+    private javax.swing.JLabel lblError;
     private javax.swing.JLabel lblGrSub;
     private javax.swing.JLabel lblName;
     private javax.swing.JLabel lblPassword;

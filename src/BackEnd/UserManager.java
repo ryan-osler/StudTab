@@ -95,7 +95,7 @@ public class UserManager {
     }
     public static void updateFile(){
         String temp = "";
-        for (int i = 0; i < countUsers(TimetableManager.getSchoolCode()); i++) {
+        for (int i = 0; i < userArr.length; i++) {
             if (userArr[i] instanceof Teacher) {
                 temp+= ((Teacher) userArr[i]).printTeacher()+"\n";
             } else{
@@ -110,5 +110,25 @@ public class UserManager {
         } catch (IOException ex) {
             Logger.getLogger(UserManager.class.getName()).log(Level.SEVERE, null, ex);
         }
+    }
+    
+    public static void addUser(Student inUser){
+        Student[] temp = new Student[userArr.length+1];
+        for (int i = 0; i < userArr.length; i++) {
+            temp[i] = userArr[i];
+        }
+        temp[userArr.length] = inUser;
+        userArr = temp;
+        updateFile();   
+    }
+    
+    public static void editUser(Student inUser){
+        for (int i = 0; i < userArr.length; i++) {
+            if (userArr[i].getEmail().equals(inUser.getEmail())) {
+                userArr[i] = inUser;
+                System.out.println("Updated User");
+            }
+        }
+        updateFile();
     }
 }
