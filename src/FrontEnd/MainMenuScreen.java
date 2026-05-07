@@ -6,6 +6,8 @@ package FrontEnd;
 
 import BackEnd.TimetableManager;
 import BackEnd.UserManager;
+import java.awt.Image;
+import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.logging.Level;
@@ -29,9 +31,24 @@ public class MainMenuScreen extends javax.swing.JFrame {
         lblStudentName.setText(UserManager.getCurrentUser().getName()+" "+UserManager.getCurrentUser().getSurname());
         lblDOB.setText(UserManager.getCurrentUser().getDOB());
         lblGrade.setText(String.valueOf(UserManager.getCurrentUser().getGrade()));
-        String path = "src/Images/" + UserManager.getCurrentUser().getEmail() + ".jpg";
-        ImageIcon icon = new ImageIcon(path);
-        lblProfilePic.setIcon(icon);
+        String path = "data/"+TimetableManager.getSchoolCode()+"/Pictures/" + UserManager.getCurrentUser().getName()+UserManager.getCurrentUser().getSurname() + ".jpg";
+        
+        File imgFile = new File(path);
+        if (imgFile.exists()) {
+            ImageIcon icon = new ImageIcon(path);
+            Image scaled = icon.getImage().getScaledInstance(
+                lblProfilePic.getWidth(), 
+                lblProfilePic.getHeight(), 
+                Image.SCALE_SMOOTH
+            );
+            lblProfilePic.setIcon(new ImageIcon(scaled));
+            lblProfilePic.revalidate();
+            lblProfilePic.repaint();
+            System.out.println("Icon Set");
+        } else {
+            System.out.println("Couldn't locate profile picture: " + path);
+        }
+        
         btnViewTimetable.setBorder(BorderFactory.createEmptyBorder(10, 20, 10, 20));//rounded edges
         if (!UserManager.getCurrentUser().getIsAdmin()) {
             btnAddStudent.setEnabled(false);
@@ -121,7 +138,6 @@ public class MainMenuScreen extends javax.swing.JFrame {
         lblGrade.setText("jLabel4");
         pnlDetails.add(lblGrade, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 50, 90, -1));
 
-        lblProfilePic.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/26344@stjohnscollege.co.za.jpg"))); // NOI18N
         lblProfilePic.setText("jLabel3");
         pnlDetails.add(lblProfilePic, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 80, 170, 120));
 

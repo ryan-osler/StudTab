@@ -12,6 +12,7 @@ import java.awt.Color;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
+import javax.swing.JOptionPane;
 import javax.swing.border.LineBorder;
 import javax.swing.table.DefaultTableModel;
 
@@ -134,7 +135,36 @@ public class ManageStudentsScreen extends javax.swing.JFrame {
                 
             }
         });
+        btnDelete.addMouseListener(new java.awt.event.MouseAdapter() {
+            @Override
+            public void mouseEntered(java.awt.event.MouseEvent evt){
+                btnDelete.setForeground(Color.WHITE);
+                btnDelete.setBorder(new LineBorder(Color.WHITE));
+            }
+            @Override
+            public void mouseExited(java.awt.event.MouseEvent evt){
+                btnDelete.setForeground(norm);
+                btnDelete.setBorder(new LineBorder(norm));
+            }
+            @Override
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                btnDelete.setForeground(norm);
+                btnDelete.setBorder(new LineBorder(norm));
+            }
+            @Override
+            public void mouseReleased(java.awt.event.MouseEvent evt){
+                if (btnDelete.contains(evt.getPoint())) {
+                    btnDelete.setForeground(Color.WHITE);
+                    btnDelete.setBorder(new LineBorder(Color.WHITE));
+                }else{
+                    btnDelete.setForeground(norm);
+                    btnDelete.setBorder(new LineBorder(norm));
+                }
+                
+            }
+        });
     }
+    
     private void loadTblStudents(){
         DefaultTableModel model = (DefaultTableModel) tblStudents.getModel();
         model.setRowCount(0);
@@ -153,6 +183,7 @@ public class ManageStudentsScreen extends javax.swing.JFrame {
             
         }
     }
+    
     private void loadTblStudents(String inEmail){//Method for searching
         DefaultTableModel model = (DefaultTableModel) tblStudents.getModel();
         model.setRowCount(0);
@@ -174,6 +205,7 @@ public class ManageStudentsScreen extends javax.swing.JFrame {
             
         }
     }
+    
     private void setTblStudents(){
         tblStudents.setDefaultRenderer(Object.class, new javax.swing.table.DefaultTableCellRenderer(){//force render of background to white
             @Override
@@ -359,6 +391,7 @@ public class ManageStudentsScreen extends javax.swing.JFrame {
         btnAddStudent = new javax.swing.JButton();
         btnMainMenu = new javax.swing.JButton();
         lblError = new javax.swing.JLabel();
+        btnDelete = new javax.swing.JButton();
         lblBackground = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -463,7 +496,7 @@ public class ManageStudentsScreen extends javax.swing.JFrame {
                 btnSaveActionPerformed(evt);
             }
         });
-        jPanel1.add(btnSave, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 530, 70, -1));
+        jPanel1.add(btnSave, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 530, 70, -1));
 
         btnAddStudent.setFont(new java.awt.Font("Tw Cen MT Condensed Extra Bold", 0, 18)); // NOI18N
         btnAddStudent.setForeground(new java.awt.Color(47, 56, 120));
@@ -493,6 +526,18 @@ public class ManageStudentsScreen extends javax.swing.JFrame {
         lblError.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lblError.setText("lblError");
         jPanel1.add(lblError, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 510, 260, -1));
+
+        btnDelete.setFont(new java.awt.Font("Tw Cen MT Condensed Extra Bold", 0, 18)); // NOI18N
+        btnDelete.setForeground(new java.awt.Color(47, 56, 120));
+        btnDelete.setText("Delete");
+        btnDelete.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(47, 56, 120)));
+        btnDelete.setContentAreaFilled(false);
+        btnDelete.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnDeleteActionPerformed(evt);
+            }
+        });
+        jPanel1.add(btnDelete, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 530, 70, -1));
 
         lblBackground.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/loginBackground.png"))); // NOI18N
         lblBackground.setText("jLabel1");
@@ -534,6 +579,21 @@ public class ManageStudentsScreen extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btnSaveActionPerformed
 
+    private void btnDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteActionPerformed
+        int resualt = JOptionPane.showConfirmDialog(this, "Are you sure", "confirm", JOptionPane.YES_NO_OPTION);
+        if (resualt == JOptionPane.YES_OPTION) {
+            Student temp = new Student(txfName.getText(), txfSurname.getText(), txfEmail.getText()
+                , txfPassword.getText(), txfDOB.getText(), Integer.parseInt(txfGrade.getText()), false);
+            UserManager.deleteUser(temp);
+            if (txfSearchStudent.getText().trim().isEmpty()) {
+                loadTblStudents();
+            }else{
+                loadTblStudents(txfSearchStudent.getText().trim());
+            }
+        }
+        
+    }//GEN-LAST:event_btnDeleteActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -571,6 +631,7 @@ public class ManageStudentsScreen extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAddStudent;
+    private javax.swing.JButton btnDelete;
     private javax.swing.JButton btnMainMenu;
     private javax.swing.JButton btnSave;
     private javax.swing.JLabel jLabel1;

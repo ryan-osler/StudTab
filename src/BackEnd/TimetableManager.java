@@ -25,7 +25,7 @@ public class TimetableManager {
         }
         int count = 0;
         try{
-            Scanner scFile = new Scanner(new File("Timetables"+schoolCode+".txt"));
+            Scanner scFile = new Scanner(new File("data/" + TimetableManager.getSchoolCode() + "/Timetables"));
             while(scFile.hasNext()){
                 count++;
                 scFile.nextLine();
@@ -50,7 +50,7 @@ public class TimetableManager {
         }
         tArr = new Timetable[size];
         try{
-            Scanner scFile = new Scanner(new File("Timetables"+schoolCode+".txt"));
+            Scanner scFile = new Scanner(new File("data/" + TimetableManager.getSchoolCode() + "/Timetables"));
             while(scFile.hasNext()){
                 Scanner scLine = new Scanner(scFile.nextLine()).useDelimiter("#");
                 int ID = scLine.nextInt();

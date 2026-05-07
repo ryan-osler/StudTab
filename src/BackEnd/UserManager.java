@@ -25,7 +25,7 @@ public class UserManager {
     public static int countUsers(String inSchoolCode){
         int count = 0;
         try{
-            Scanner scFile = new Scanner(new File("Users"+inSchoolCode+".txt"));
+            Scanner scFile = new Scanner(new File("data/" + TimetableManager.getSchoolCode() + "/Users"));
             while(scFile.hasNext()){
                 count++;
                 scFile.nextLine();
@@ -46,7 +46,7 @@ public class UserManager {
         }
         userArr = new Student[size];
         try{
-            Scanner scFile = new Scanner(new File("Users"+inSchoolCode+".txt"));
+            Scanner scFile = new Scanner(new File("data/" + TimetableManager.getSchoolCode() + "/Users"));
             while(scFile.hasNext()){
                 Scanner scLine = new Scanner(scFile.nextLine()).useDelimiter("#");
                 String name = scLine.next();
@@ -103,13 +103,19 @@ public class UserManager {
             }
         }
         try {
-            FileWriter outFile = new FileWriter("Users"+TimetableManager.getSchoolCode()+".txt");
+            FileWriter outFile = new FileWriter("data/" + TimetableManager.getSchoolCode() + "/Users");
             outFile.write(temp);
             outFile.close();
             System.out.println("Updated Users");
         } catch (IOException ex) {
             Logger.getLogger(UserManager.class.getName()).log(Level.SEVERE, null, ex);
         }
+    }
+    public static String getPath(String fileName) {
+        return "data/" + TimetableManager.getSchoolCode() + "/" + fileName;
+    }
+    public static void createSchoolFolder() {
+        new File("data/" + TimetableManager.getSchoolCode()).mkdirs();
     }
     
     public static void addUser(Student inUser){
@@ -130,5 +136,24 @@ public class UserManager {
             }
         }
         updateFile();
+    }
+    public static void deleteUser(Student inUser){//this method deletes all with matching emails
+        int size = 0;
+        for (int i = 0; i < userArr.length; i++) {//counting size without deleted
+            if (!userArr[i].getEmail().equals(inUser.getEmail())) {
+                size++;
+            }
+        }
+        int count = 0;
+        Student temp[] = new Student[size];
+        for (int i = 0; i < userArr.length; i++) {
+            if (!userArr[i].getEmail().equals(inUser.getEmail())) {
+                temp[count] = userArr[i];
+                count++;
+            }
+        }
+        userArr = temp;
+        updateFile();
+        System.out.println("User Deleted");
     }
 }
