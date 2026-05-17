@@ -4,6 +4,7 @@
  */
 package FrontEnd;
 
+import BackEnd.Student;
 import BackEnd.TimetableManager;
 import java.awt.Color;
 import javax.swing.table.DefaultTableModel;
@@ -25,6 +26,18 @@ public class TimetableScreen extends javax.swing.JFrame {
         setTblTimetable();
         this.mainMenu = mm;
         loadTimetable();
+        tblTimetable.setDefaultEditor(Object.class, null);
+    }
+    private Student targetStudent;
+    public TimetableScreen(MainMenuScreen mm, Student inUser) {
+        
+        initComponents();
+        targetStudent = inUser;
+        setLocationRelativeTo(null);
+        setTblTimetable();
+        this.mainMenu = mm;
+        loadTargetTimetable();
+        
     }
     
     public TimetableScreen(){
@@ -32,6 +45,7 @@ public class TimetableScreen extends javax.swing.JFrame {
         setLocationRelativeTo(null);
         setTblTimetable();
         loadTimetable();
+        tblTimetable.setDefaultEditor(Object.class, null);
     }
     
     public void loadTimetable(){
@@ -45,6 +59,21 @@ public class TimetableScreen extends javax.swing.JFrame {
                 TimetableManager.getLesson(4, i),
                 TimetableManager.getLesson(5, i)});
         }
+    }
+    public void loadTargetTimetable(){//loads table for a target
+        Student temp = TimetableManager.getCurrentUser();
+        TimetableManager.setCurrentUser(targetStudent);
+        DefaultTableModel model = (DefaultTableModel) tblTimetable.getModel();
+        model.setRowCount(0);
+        for (int i = 0; i < 7; i++) {
+            model.addRow(new Object[] {"P"+i, 
+                TimetableManager.getLesson(1, i), 
+                TimetableManager.getLesson(2, i),
+                TimetableManager.getLesson(3, i),
+                TimetableManager.getLesson(4, i),
+                TimetableManager.getLesson(5, i)});
+        }
+        TimetableManager.setCurrentUser(temp);
     }
     
     private void setTblTimetable(){
@@ -103,8 +132,9 @@ public class TimetableScreen extends javax.swing.JFrame {
                 }
             }
         );
-        tblTimetable.setDefaultEditor(Object.class, null);
+        
     }
+    
 
     /**
      * This method is called from within the constructor to initialize the form.

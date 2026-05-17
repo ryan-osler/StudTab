@@ -156,4 +156,12 @@ public class UserManager {
         updateFile();
         System.out.println("User Deleted");
     }
+    public static Student getUser(String inEmail){
+        for (int i = 0; i < userArr.length; i++) {
+            if (userArr[i].getEmail().equals(inEmail)) {
+                return userArr[i];
+            }
+        }
+        return null;
+    }
 }

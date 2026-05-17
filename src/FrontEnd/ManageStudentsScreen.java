@@ -13,6 +13,7 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import javax.swing.JOptionPane;
+import javax.swing.JPanel;
 import javax.swing.border.LineBorder;
 import javax.swing.table.DefaultTableModel;
 
@@ -37,6 +38,7 @@ public class ManageStudentsScreen extends javax.swing.JFrame {
         loadTblStudents();
         setLocationRelativeTo(null);
         lblError.setText("");
+       
     }
     public ManageStudentsScreen(){
         initComponents();
@@ -47,6 +49,7 @@ public class ManageStudentsScreen extends javax.swing.JFrame {
         setTblStudents();
         loadTblStudents();
         lblError.setText("");
+       
     }
     
     private void btnSetup(){//hovver effect for buttons. this shiz took so long
@@ -260,8 +263,10 @@ public class ManageStudentsScreen extends javax.swing.JFrame {
                 }
             }
         );
-        tblStudents.getColumnModel().getColumn(6).setCellRenderer(new EditRenderer());
-        tblStudents.getColumnModel().getColumn(6).setCellEditor(new EditEditor());
+        tblStudents.getColumnModel().getColumn(6).setPreferredWidth(150);
+        tblStudents.getColumnModel().getColumn(6).setMinWidth(150);
+        tblStudents.getColumnModel().getColumn(6).setCellRenderer(new ActionRenderer());
+        tblStudents.getColumnModel().getColumn(6).setCellEditor(new ActionEditor());
     }
     
     private class EditRenderer extends javax.swing.table.DefaultTableCellRenderer{
@@ -326,6 +331,89 @@ public class ManageStudentsScreen extends javax.swing.JFrame {
         @Override public Object getCellEditorValue(){ 
             return "Edit";
         }
+    }
+    
+    private class ActionRenderer implements javax.swing.table.TableCellRenderer {
+        private final JPanel panel = new JPanel(new java.awt.FlowLayout(java.awt.FlowLayout.CENTER, 4, 4));
+        private final javax.swing.JButton editBtn = new javax.swing.JButton("Edit");
+        private final javax.swing.JButton timetableBtn = new javax.swing.JButton("View Timetable");
+
+        ActionRenderer() {
+            editBtn.setBackground(new Color(47, 56, 120));
+            editBtn.setForeground(Color.WHITE);
+            editBtn.setBorderPainted(false);
+            editBtn.setOpaque(true);
+            timetableBtn.setBackground(new Color(47, 56, 120));
+            timetableBtn.setForeground(Color.WHITE);
+            timetableBtn.setBorderPainted(false);
+            timetableBtn.setOpaque(true);
+            panel.setBackground(Color.WHITE);
+            panel.add(editBtn);
+            panel.add(timetableBtn);
+        }
+        
+        @Override
+        public java.awt.Component getTableCellRendererComponent(
+                javax.swing.JTable table, Object value, boolean isSelected,
+                boolean hasFocus, int row, int column) {
+            return panel;
+        }
+    }
+    
+    private class ActionEditor extends javax.swing.DefaultCellEditor {
+        private final JPanel panel = new JPanel(new java.awt.FlowLayout(java.awt.FlowLayout.CENTER, 4, 4));
+        private final javax.swing.JButton editBtn = new javax.swing.JButton("Edit");
+        private final javax.swing.JButton timetableBtn = new javax.swing.JButton("View Timetable");
+
+        ActionEditor() {
+            super(new javax.swing.JCheckBox());
+            
+            editBtn.setBackground(new Color(47, 56, 120));
+            editBtn.setForeground(Color.WHITE);
+            editBtn.setBorderPainted(false);
+            editBtn.setOpaque(true);
+            timetableBtn.setBackground(new Color(47, 120, 56));
+            timetableBtn.setForeground(Color.WHITE);
+            timetableBtn.setBorderPainted(false);
+            timetableBtn.setOpaque(true);
+            panel.setBackground(Color.WHITE);
+            panel.add(editBtn);
+            panel.add(timetableBtn);
+            
+            editBtn.addActionListener(e -> {
+                int row = tblStudents.getSelectedRow();
+                if (row >= 0) {
+                    txfName.setText((String) tblStudents.getValueAt(row, 0));
+                    txfSurname.setText((String) tblStudents.getValueAt(row, 1));
+                    txfEmail.setText((String) tblStudents.getValueAt(row, 2));
+                    txfPassword.setText((String) tblStudents.getValueAt(row, 3));
+                    txfDOB.setText((String) tblStudents.getValueAt(row, 4));
+                    txfGrade.setText(String.valueOf(tblStudents.getValueAt(row, 5)));
+                }
+                fireEditingStopped();
+            });
+            
+            timetableBtn.addActionListener(e -> {
+                int row = tblStudents.getSelectedRow();
+                if (row >= 0) {
+                    String email = (String) tblStudents.getValueAt(row, 2);
+                    TimetableScreen tt = new TimetableScreen(mainMenu, UserManager.getUser(email));
+                    tt.setVisible(true);
+                    ManageStudentsScreen.this.dispose();
+                    System.out.println("View timetable for: " + email);
+                }
+                fireEditingStopped();
+            });
+        }
+        
+        @Override
+        public java.awt.Component getTableCellEditorComponent(
+                javax.swing.JTable table, Object value,
+                boolean isSelected, int row, int column) {
+            return panel;
+        }
+        
+        @Override public Object getCellEditorValue() { return "actions"; }
     }
     
     private boolean validateEdit(){
@@ -438,7 +526,7 @@ public class ManageStudentsScreen extends javax.swing.JFrame {
             }
         });
         tblStudents.setGridColor(new java.awt.Color(0, 0, 0));
-        tblStudents.setRowHeight(50);
+        tblStudents.setRowHeight(35);
         tblStudents.setRowMargin(1);
         tblStudents.setRowSelectionAllowed(false);
         tblStudents.setSelectionBackground(new java.awt.Color(255, 255, 255));
