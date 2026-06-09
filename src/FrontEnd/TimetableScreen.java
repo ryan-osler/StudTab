@@ -7,6 +7,7 @@ package FrontEnd;
 import BackEnd.Student;
 import BackEnd.TimetableManager;
 import java.awt.Color;
+import javax.swing.border.LineBorder;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -27,6 +28,7 @@ public class TimetableScreen extends javax.swing.JFrame {
         this.mainMenu = mm;
         loadTimetable();
         tblTimetable.setDefaultEditor(Object.class, null);
+        btnSetup();
     }
     private Student targetStudent;
     public TimetableScreen(MainMenuScreen mm, Student inUser) {
@@ -37,6 +39,7 @@ public class TimetableScreen extends javax.swing.JFrame {
         setTblTimetable();
         this.mainMenu = mm;
         loadTargetTimetable();
+        btnSetup();
         
     }
     
@@ -46,8 +49,40 @@ public class TimetableScreen extends javax.swing.JFrame {
         setTblTimetable();
         loadTimetable();
         tblTimetable.setDefaultEditor(Object.class, null);
+        btnSetup();
     }
     
+    private void btnSetup(){//hovver effect for buttons. this shiz took so long
+        Color norm = new Color(47,56,120);
+        btnReturnToMainMenu.addMouseListener(new java.awt.event.MouseAdapter() {
+            @Override
+            public void mouseEntered(java.awt.event.MouseEvent evt){
+                btnReturnToMainMenu.setForeground(Color.WHITE);
+                btnReturnToMainMenu.setBorder(new LineBorder(Color.WHITE));
+            }
+            @Override
+            public void mouseExited(java.awt.event.MouseEvent evt){
+                btnReturnToMainMenu.setForeground(norm);
+                btnReturnToMainMenu.setBorder(new LineBorder(norm));
+            }
+            @Override
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                btnReturnToMainMenu.setForeground(norm);
+                btnReturnToMainMenu.setBorder(new LineBorder(norm));
+            }
+            @Override
+            public void mouseReleased(java.awt.event.MouseEvent evt){
+                if (btnReturnToMainMenu.contains(evt.getPoint())) {
+                    btnReturnToMainMenu.setForeground(Color.WHITE);
+                    btnReturnToMainMenu.setBorder(new LineBorder(Color.WHITE));
+                }else{
+                    btnReturnToMainMenu.setForeground(norm);
+                    btnReturnToMainMenu.setBorder(new LineBorder(norm));
+                }
+                
+            }
+        });
+    }
     public void loadTimetable(){
         DefaultTableModel model = (DefaultTableModel) tblTimetable.getModel();
         model.setRowCount(0);
@@ -145,23 +180,15 @@ public class TimetableScreen extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        btnReturnToMainMenu = new javax.swing.JButton();
         jPanel1 = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         tblTimetable = new javax.swing.JTable();
+        btnReturnToMainMenu = new javax.swing.JButton();
         lblBackground = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        btnReturnToMainMenu.setText("MainMenu");
-        btnReturnToMainMenu.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnReturnToMainMenuActionPerformed(evt);
-            }
-        });
-        getContentPane().add(btnReturnToMainMenu, new org.netbeans.lib.awtextra.AbsoluteConstraints(770, 20, -1, -1));
 
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
@@ -187,6 +214,19 @@ public class TimetableScreen extends javax.swing.JFrame {
         jPanel2.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 610, 380));
 
         jPanel1.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 60, 610, 380));
+
+        btnReturnToMainMenu.setFont(new java.awt.Font("Tw Cen MT Condensed Extra Bold", 0, 18)); // NOI18N
+        btnReturnToMainMenu.setForeground(new java.awt.Color(47, 56, 120));
+        btnReturnToMainMenu.setText("MainMenu");
+        btnReturnToMainMenu.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(47, 56, 120)));
+        btnReturnToMainMenu.setContentAreaFilled(false);
+        btnReturnToMainMenu.setFocusPainted(false);
+        btnReturnToMainMenu.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnReturnToMainMenuActionPerformed(evt);
+            }
+        });
+        jPanel1.add(btnReturnToMainMenu, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 450, -1, -1));
 
         lblBackground.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/loginBackground.png"))); // NOI18N
         lblBackground.setText("jLabel1");
