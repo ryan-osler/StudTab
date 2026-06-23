@@ -9,6 +9,9 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.border.LineBorder;
 
 /**
@@ -24,6 +27,7 @@ public class CreateSchoolScreen extends javax.swing.JFrame {
         initComponents();
         btnSetup();
         setLocationRelativeTo(null);
+        lblError.setText("");
     }
     
     private void btnSetup(){//hovver effect for buttons. this shiz took so long
@@ -85,23 +89,50 @@ public class CreateSchoolScreen extends javax.swing.JFrame {
             }
         });
     }
-    private boolean validateInfo(){
+    private boolean validateInfo(){//method needs work.
         if (txfSchoolCode.getText().isEmpty()) {
             return false;
         }
         return true;
     }
-    
+    private boolean createTimttableFile(String code){//method creates timetables txf file
+        try {
+            FileWriter outFile = new FileWriter("data/"+code+"/Timetables");//data is not added now
+            outFile.close();
+            return true;
+        } catch (IOException ex) {
+            Logger.getLogger(CreateSchoolScreen.class.getName()).log(Level.SEVERE, null, ex);
+            System.out.println("Couldnt create timetabled file");
+            lblError.setText("Couldnt create timetabled file");
+        }
+        return false;
+    }
     private String createUserFile(){
         String temp = "";
         
         LocalDate DOB = dpDOB.getDate();
         
         temp += txfName.getText().trim()+"#"+txfSurname.getText().trim()+"#"+txfEmail.getText().trim()+"#"+txfPassword.getText().trim()+"#"+
-                DOB+"#true#-1#"+txfSubject.getText();
+                DOB.format(DateTimeFormatter.ofPattern("dd-MM-yyyy"))+"#true#-1#"+txfSubject.getText();
         return temp;
     }
-
+    private boolean createSchoolInfoFile(String name, String code, LocalDate date, boolean isHigh){
+        try {
+            FileWriter outFile = new FileWriter("data/"+code+"/SchoolInfo");
+            String temp = name+"\n"+code+"\n"+date.format(DateTimeFormatter.ofPattern("dd-MM-yyyy"))+"\n"+isHigh;
+            outFile.write(temp);
+            outFile.close();
+        } catch (IOException ex) {
+            Logger.getLogger(CreateSchoolScreen.class.getName()).log(Level.SEVERE, null, ex);
+            System.out.println("Error While Creating SchoolInfo file.");
+            lblError.setText("Couldnt Create School File");
+            return false;
+        }
+        
+        return true;/*this is a helper method to create the school info file.
+        this is a boolean method for future use with validation ext.
+        */
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -136,6 +167,7 @@ public class CreateSchoolScreen extends javax.swing.JFrame {
         dpFoundingDate = new com.github.lgooddatepicker.components.DatePicker();
         btnCreateSchool = new javax.swing.JButton();
         btnBack = new javax.swing.JButton();
+        lblError = new javax.swing.JLabel();
         lblBackground = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -258,6 +290,11 @@ public class CreateSchoolScreen extends javax.swing.JFrame {
         btnBack.setFocusPainted(false);
         jPanel1.add(btnBack, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 480, 100, -1));
 
+        lblError.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblError.setText("lblError");
+        lblError.setForeground(new java.awt.Color(204, 0, 0));
+        jPanel1.add(lblError, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 430, 290, -1));
+
         lblBackground.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/loginBackground.png"))); // NOI18N
         lblBackground.setText("jLabel1");
         jPanel1.add(lblBackground, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1030, 580));
@@ -272,7 +309,11 @@ public class CreateSchoolScreen extends javax.swing.JFrame {
     }//GEN-LAST:event_txfSchoolNameActionPerformed
 
     private void btnCreateSchoolActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCreateSchoolActionPerformed
-
+        String schoolName = txfSchoolName.getText().trim();
+        String schoolCode = txfSchoolCode.getText().trim();
+        LocalDate foundingDate = dpFoundingDate.getDate();
+        boolean isHigh = cbxHighSchool.isSelected();
+        
         File folder = new File("data/"+txfSchoolCode.getText());
         try{//creates new file directory for the school
             if (folder.mkdir()) {
@@ -283,9 +324,18 @@ public class CreateSchoolScreen extends javax.swing.JFrame {
                 File picFolder = new File(folder.getPath()+"/Pictures");//creates pictures directory inside of school folder
                 picFolder.mkdir();
                 
+                createSchoolInfoFile(schoolName, schoolCode, foundingDate, isHigh);
                 outFile.close();
+                
+                createTimttableFile(schoolCode);//creates timetable file without any content
+                outFile.close();
+                
+                LoginScreen ls = new LoginScreen();
+                ls.setVisible(true);
+                this.dispose();
             }else{
                 System.out.println("School Code In Use");
+                lblError.setText("SchoolCode in use");
             }
             
             
@@ -348,6 +398,7 @@ public class CreateSchoolScreen extends javax.swing.JFrame {
     private javax.swing.JLabel lblBackground;
     private javax.swing.JLabel lblDOB;
     private javax.swing.JLabel lblEmail;
+    private javax.swing.JLabel lblError;
     private javax.swing.JLabel lblFoundingDate;
     private javax.swing.JLabel lblName;
     private javax.swing.JLabel lblPassword;

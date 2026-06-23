@@ -14,6 +14,7 @@ import java.io.File;
 import java.awt.datatransfer.*;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.time.format.DateTimeFormatter;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.*;
@@ -151,11 +152,11 @@ public class AddUserScreen extends javax.swing.JFrame {
         txfSurname = new javax.swing.JTextField();
         txfEmail = new javax.swing.JTextField();
         txfPassword = new javax.swing.JTextField();
-        txfDOB = new javax.swing.JTextField();
         txfGrSub = new javax.swing.JTextField();
         pnlFile = new javax.swing.JPanel();
         btnAddUser = new javax.swing.JButton();
         btnMainMenu = new javax.swing.JButton();
+        dpDOB = new com.github.lgooddatepicker.components.DatePicker();
         lblError = new javax.swing.JLabel();
         txfBackground = new javax.swing.JLabel();
 
@@ -220,14 +221,6 @@ public class AddUserScreen extends javax.swing.JFrame {
             }
         });
         jPanel1.add(txfPassword, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 210, 120, -1));
-
-        txfDOB.setText("dd-MM-yyyy");
-        txfDOB.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txfDOBActionPerformed(evt);
-            }
-        });
-        jPanel1.add(txfDOB, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 240, 90, -1));
         jPanel1.add(txfGrSub, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 300, 100, -1));
 
         pnlFile.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(47, 56, 120), 3, true));
@@ -269,6 +262,7 @@ public class AddUserScreen extends javax.swing.JFrame {
             }
         });
         jPanel1.add(btnMainMenu, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 450, 100, -1));
+        jPanel1.add(dpDOB, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 240, -1, -1));
 
         lblError.setForeground(new java.awt.Color(204, 0, 0));
         lblError.setText("jLabel1");
@@ -287,10 +281,6 @@ public class AddUserScreen extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_txfNameActionPerformed
 
-    private void txfDOBActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txfDOBActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txfDOBActionPerformed
-
     private void txfPasswordActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txfPasswordActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txfPasswordActionPerformed
@@ -298,9 +288,13 @@ public class AddUserScreen extends javax.swing.JFrame {
     private void btnAddUserActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddUserActionPerformed
         Student temp;
         if (cbxIsTeacher.isSelected()) {
-            temp = new Teacher(txfName.getText(), txfSurname.getText(), txfEmail.getText(), txfPassword.getText(), txfDOB.getText(), -1, true, txfGrSub.getText());
+            temp = new Teacher(txfName.getText(), txfSurname.getText(), txfEmail.getText(), txfPassword.getText(),
+                    dpDOB.getDate().format(DateTimeFormatter.ofPattern("dd-MM-yyyy")),
+                    -1, true, txfGrSub.getText());
         } else{
-            temp = new Student(txfName.getText(), txfSurname.getText(), txfEmail.getText(), txfPassword.getText(), txfDOB.getText(), Integer.parseInt(txfGrSub.getText()), false);
+            temp = new Student(txfName.getText(), txfSurname.getText(), txfEmail.getText(),
+                    txfPassword.getText(), dpDOB.getDate().format(DateTimeFormatter.ofPattern("dd-MM-yyyy")),
+                     Integer.parseInt(txfGrSub.getText()), false);
         }
         UserManager.addUser(temp);
         lblError.setForeground(Color.GREEN);
@@ -352,6 +346,7 @@ public class AddUserScreen extends javax.swing.JFrame {
     private javax.swing.JButton btnAddUser;
     private javax.swing.JButton btnMainMenu;
     private javax.swing.JCheckBox cbxIsTeacher;
+    private com.github.lgooddatepicker.components.DatePicker dpDOB;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JLabel lblDOB;
     private javax.swing.JLabel lblEmail;
@@ -363,7 +358,6 @@ public class AddUserScreen extends javax.swing.JFrame {
     private javax.swing.JLabel lblTitle;
     private javax.swing.JPanel pnlFile;
     private javax.swing.JLabel txfBackground;
-    private javax.swing.JTextField txfDOB;
     private javax.swing.JTextField txfEmail;
     private javax.swing.JTextField txfGrSub;
     private javax.swing.JTextField txfName;

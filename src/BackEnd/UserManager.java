@@ -25,7 +25,7 @@ public class UserManager {
     public static int countUsers(String inSchoolCode){
         int count = 0;
         try{
-            Scanner scFile = new Scanner(new File("data/" + TimetableManager.getSchoolCode() + "/Users"));
+            Scanner scFile = new Scanner(new File("data/" + inSchoolCode + "/Users"));
             while(scFile.hasNext()){
                 count++;
                 scFile.nextLine();
@@ -46,7 +46,7 @@ public class UserManager {
         }
         userArr = new Student[size];
         try{
-            Scanner scFile = new Scanner(new File("data/" + TimetableManager.getSchoolCode() + "/Users"));
+            Scanner scFile = new Scanner(new File("data/" + inSchoolCode + "/Users"));
             while(scFile.hasNext()){
                 Scanner scLine = new Scanner(scFile.nextLine()).useDelimiter("#");
                 String name = scLine.next();

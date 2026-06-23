@@ -199,6 +199,11 @@ public class LoginScreen extends javax.swing.JFrame {
         btnCreateSchool.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         btnCreateSchool.setContentAreaFilled(false);
         btnCreateSchool.setFocusPainted(false);
+        btnCreateSchool.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCreateSchoolActionPerformed(evt);
+            }
+        });
         jPanel1.add(btnCreateSchool, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 220, 120, -1));
 
         lblError.setFont(new java.awt.Font("Segoe UI Semibold", 0, 12)); // NOI18N
@@ -276,6 +281,12 @@ public class LoginScreen extends javax.swing.JFrame {
             }
         }
     }//GEN-LAST:event_btnLoginActionPerformed
+
+    private void btnCreateSchoolActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCreateSchoolActionPerformed
+        CreateSchoolScreen cs = new CreateSchoolScreen();
+        cs.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_btnCreateSchoolActionPerformed
     public String getSchoolCode(){
         return txfSchoolCode.getText();
     }
