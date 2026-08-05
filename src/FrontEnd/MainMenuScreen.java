@@ -4,6 +4,7 @@
  */
 package FrontEnd;
 
+import BackEnd.Teacher;
 import BackEnd.TimetableManager;
 import BackEnd.UserManager;
 import java.awt.Image;
@@ -28,9 +29,15 @@ public class MainMenuScreen extends javax.swing.JFrame {
     public MainMenuScreen() {
         initComponents();
         setLocationRelativeTo(null);
-        lblStudentName.setText(UserManager.getCurrentUser().getName()+" "+UserManager.getCurrentUser().getSurname());
+        
         lblDOB.setText(UserManager.getCurrentUser().getDOB());
-        lblGrade.setText(String.valueOf(UserManager.getCurrentUser().getGrade()));
+        lblStudentName.setText(UserManager.getCurrentUser().getName()+" "+UserManager.getCurrentUser().getSurname());
+        if (UserManager.getCurrentUser() instanceof Teacher) {
+            lblGrade.setText(String.valueOf(UserManager.getCurrentUser().getSubject()));
+        }else{
+            lblGrade.setText(String.valueOf(UserManager.getCurrentUser().getGrade()));
+        }
+        
         String path = "data/"+TimetableManager.getSchoolCode()+"/Pictures/" + UserManager.getCurrentUser().getName()+UserManager.getCurrentUser().getSurname() + ".jpg";
         
         File imgFile = new File(path);

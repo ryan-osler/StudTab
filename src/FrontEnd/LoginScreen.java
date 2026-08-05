@@ -39,7 +39,7 @@ public class LoginScreen extends javax.swing.JFrame {
         
     }
     
-    public boolean validation(){
+    public boolean validation(){//validates info before checking login
         String emailRegex = "^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}$";
         if (txfEmail.getText().isEmpty() || psfPassword.getPassword().length == 0 || txfSchoolCode.getText().isEmpty()) {
             lblError.setText("Missing Info");

@@ -90,8 +90,25 @@ public class CreateSchoolScreen extends javax.swing.JFrame {
         });
     }
     private boolean validateInfo(){//method needs work.
-        if (txfSchoolCode.getText().isEmpty()) {
+        String emailRegex = "^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}$";
+        //Statement for presence check
+        if (txfName.getText().trim().isEmpty() || txfSurname.getText().trim().isEmpty() || txfEmail.getText().trim().isEmpty() || 
+                txfPassword.getText().trim().isEmpty() || txfSchoolName.getText().trim().isEmpty() || 
+                txfSchoolCode.getText().trim().isEmpty() || txfSubject.getText().trim().isEmpty() || dpDOB.getDate() == null || 
+                dpFoundingDate.getDate() == null) {
             return false;
+        }
+        else if (!txfEmail.getText().matches(emailRegex)) {//checking email format with regex
+            lblError.setText("Incorrect Email Format");
+            return false;
+        }else if (txfName.getText().contains("#") || txfSurname.getText().contains("#") || txfEmail.getText().contains("#") || 
+                txfPassword.getText().contains("#") || txfSchoolName.getText().contains("#") || 
+                txfSchoolCode.getText().contains("#") || txfSubject.getText().contains("#")) {
+            return false;//preventing syntax injection.
+        }else if (!txfSchoolCode.getText().trim().substring(0,3).matches("^[A-Za-z]+$")
+                || !txfSchoolCode.getText().trim().substring(3).matches("^[0-9]+$")) {
+            lblError.setText("Incorrect Code Format \"AAA000\"");
+            return false;//checking format for 
         }
         return true;
     }
@@ -309,40 +326,43 @@ public class CreateSchoolScreen extends javax.swing.JFrame {
     }//GEN-LAST:event_txfSchoolNameActionPerformed
 
     private void btnCreateSchoolActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCreateSchoolActionPerformed
-        String schoolName = txfSchoolName.getText().trim();
-        String schoolCode = txfSchoolCode.getText().trim();
-        LocalDate foundingDate = dpFoundingDate.getDate();
-        boolean isHigh = cbxHighSchool.isSelected();
-        
-        File folder = new File("data/"+txfSchoolCode.getText());
-        try{//creates new file directory for the school
-            if (folder.mkdir()) {
-                System.out.println("Created Directory");//creates directory
-                FileWriter outFile = new FileWriter("data/" + txfSchoolCode.getText() + "/Users");
-                outFile.write(createUserFile());
+        if (validateInfo()) {
+            String schoolName = txfSchoolName.getText().trim();
+            String schoolCode = txfSchoolCode.getText().trim();
+            LocalDate foundingDate = dpFoundingDate.getDate();
+            boolean isHigh = cbxHighSchool.isSelected();
+            
+            File folder = new File("data/"+txfSchoolCode.getText());
+            try{//creates new file directory for the school
+                if (folder.mkdir()) {
+                    System.out.println("Created Directory");//creates directory
+                    FileWriter outFile = new FileWriter("data/" + txfSchoolCode.getText() + "/Users");
+                    outFile.write(createUserFile());
+                    
+                    File picFolder = new File(folder.getPath()+"/Pictures");//creates pictures directory inside of school folder
+                    picFolder.mkdir();
+                    
+                    createSchoolInfoFile(schoolName, schoolCode, foundingDate, isHigh);
+                    outFile.close();
                 
-                File picFolder = new File(folder.getPath()+"/Pictures");//creates pictures directory inside of school folder
-                picFolder.mkdir();
+                    createTimttableFile(schoolCode);//creates timetable file without any content
+                    outFile.close();
                 
-                createSchoolInfoFile(schoolName, schoolCode, foundingDate, isHigh);
-                outFile.close();
-                
-                createTimttableFile(schoolCode);//creates timetable file without any content
-                outFile.close();
-                
-                LoginScreen ls = new LoginScreen();
-                ls.setVisible(true);
-                this.dispose();
-            }else{
-                System.out.println("School Code In Use");
-                lblError.setText("SchoolCode in use");
+                    LoginScreen ls = new LoginScreen();
+                    ls.setVisible(true);
+                    this.dispose();
+                }else{
+                    System.out.println("School Code In Use");
+                    lblError.setText("SchoolCode in use");
+                }
+            
+            
+            }catch(IOException f){
+               f.printStackTrace();
+                System.out.println("Error With File Creation");
             }
-            
-            
-        }catch(IOException f){
-           f.printStackTrace();
-            System.out.println("Error With File Creation");
         }
+        
     }//GEN-LAST:event_btnCreateSchoolActionPerformed
 
     /**

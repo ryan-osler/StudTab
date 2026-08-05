@@ -59,4 +59,8 @@ public class Student {
     public boolean getIsAdmin(){
         return isAdmin;
     }
+
+    public String getSubject() {
+        return "Error";
+    }
 }
