@@ -150,12 +150,12 @@ public class MainMenuScreen extends javax.swing.JFrame {
 
         jPanel1.add(pnlDetails, new org.netbeans.lib.awtextra.AbsoluteConstraints(570, 60, 190, 210));
 
-        btnAddStudent.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/btnAddStudent.png"))); // NOI18N
+        btnAddStudent.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/btnViewStudents.png"))); // NOI18N
         btnAddStudent.setBorderPainted(false);
         btnAddStudent.setContentAreaFilled(false);
         btnAddStudent.setFocusPainted(false);
-        btnAddStudent.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/btnRolAddStudent.png"))); // NOI18N
-        btnAddStudent.setSelectedIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/btnAddStudent.png"))); // NOI18N
+        btnAddStudent.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/btnRollViewStudents.png"))); // NOI18N
+        btnAddStudent.setSelectedIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/btnViewStudents.png"))); // NOI18N
         btnAddStudent.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnAddStudentActionPerformed(evt);
