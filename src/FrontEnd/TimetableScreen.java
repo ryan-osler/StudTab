@@ -82,6 +82,34 @@ public class TimetableScreen extends javax.swing.JFrame {
                 
             }
         });
+        btnInsertTimetableFile.addMouseListener(new java.awt.event.MouseAdapter() {
+            @Override
+            public void mouseEntered(java.awt.event.MouseEvent evt){
+                btnInsertTimetableFile.setForeground(Color.WHITE);
+                btnInsertTimetableFile.setBorder(new LineBorder(Color.WHITE));
+            }
+            @Override
+            public void mouseExited(java.awt.event.MouseEvent evt){
+                btnInsertTimetableFile.setForeground(norm);
+                btnInsertTimetableFile.setBorder(new LineBorder(norm));
+            }
+            @Override
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                btnInsertTimetableFile.setForeground(norm);
+                btnInsertTimetableFile.setBorder(new LineBorder(norm));
+            }
+            @Override
+            public void mouseReleased(java.awt.event.MouseEvent evt){
+                if (btnInsertTimetableFile.contains(evt.getPoint())) {
+                    btnInsertTimetableFile.setForeground(Color.WHITE);
+                    btnInsertTimetableFile.setBorder(new LineBorder(Color.WHITE));
+                }else{
+                    btnInsertTimetableFile.setForeground(norm);
+                    btnInsertTimetableFile.setBorder(new LineBorder(norm));
+                }
+                
+            }
+        });
     }
     public void loadTimetable(){
         DefaultTableModel model = (DefaultTableModel) tblTimetable.getModel();
@@ -181,6 +209,7 @@ public class TimetableScreen extends javax.swing.JFrame {
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
+        btnInsertTimetableFile = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         tblTimetable = new javax.swing.JTable();
@@ -191,6 +220,14 @@ public class TimetableScreen extends javax.swing.JFrame {
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        btnInsertTimetableFile.setFont(new java.awt.Font("Tw Cen MT Condensed Extra Bold", 0, 18)); // NOI18N
+        btnInsertTimetableFile.setForeground(new java.awt.Color(47, 56, 120));
+        btnInsertTimetableFile.setText("Insert Timetable File");
+        btnInsertTimetableFile.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(47, 56, 120)));
+        btnInsertTimetableFile.setContentAreaFilled(false);
+        btnInsertTimetableFile.setFocusPainted(false);
+        jPanel1.add(btnInsertTimetableFile, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 450, -1, -1));
 
         jPanel2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
@@ -226,7 +263,7 @@ public class TimetableScreen extends javax.swing.JFrame {
                 btnReturnToMainMenuActionPerformed(evt);
             }
         });
-        jPanel1.add(btnReturnToMainMenu, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 450, -1, -1));
+        jPanel1.add(btnReturnToMainMenu, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 20, -1, -1));
 
         lblBackground.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/loginBackground.png"))); // NOI18N
         lblBackground.setText("jLabel1");
@@ -278,6 +315,7 @@ public class TimetableScreen extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnInsertTimetableFile;
     private javax.swing.JButton btnReturnToMainMenu;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;

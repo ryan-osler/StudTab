@@ -33,8 +33,10 @@ public class MainMenuScreen extends javax.swing.JFrame {
         lblDOB.setText(UserManager.getCurrentUser().getDOB());
         lblStudentName.setText(UserManager.getCurrentUser().getName()+" "+UserManager.getCurrentUser().getSurname());
         if (UserManager.getCurrentUser() instanceof Teacher) {
+            lblGradeIcon.setText("Subject");
             lblGrade.setText(String.valueOf(UserManager.getCurrentUser().getSubject()));
         }else{
+            lblGradeIcon.setText("Subject");
             lblGrade.setText(String.valueOf(UserManager.getCurrentUser().getGrade()));
         }
         
@@ -53,7 +55,8 @@ public class MainMenuScreen extends javax.swing.JFrame {
             lblProfilePic.repaint();
             System.out.println("Icon Set");
         } else {
-            System.out.println("Couldn't locate profile picture: " + path);
+            System.out.println("Couldn't locate profile picture: " + path +"\nIcon Set To Defualt.");
+            
         }
         
         btnViewTimetable.setBorder(BorderFactory.createEmptyBorder(10, 20, 10, 20));//rounded edges
@@ -79,7 +82,7 @@ public class MainMenuScreen extends javax.swing.JFrame {
         pnlDetails = new javax.swing.JPanel();
         lblStudentName = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
+        lblGradeIcon = new javax.swing.JLabel();
         lblDOB = new javax.swing.JLabel();
         lblGrade = new javax.swing.JLabel();
         lblProfilePic = new javax.swing.JLabel();
@@ -127,11 +130,11 @@ public class MainMenuScreen extends javax.swing.JFrame {
         jLabel1.setText("DOB:");
         pnlDetails.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 30, 40, -1));
 
-        jLabel2.setFont(new java.awt.Font("Tw Cen MT Condensed Extra Bold", 0, 14)); // NOI18N
-        jLabel2.setForeground(new java.awt.Color(47, 56, 120));
-        jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        jLabel2.setText("Grade:");
-        pnlDetails.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 50, 40, -1));
+        lblGradeIcon.setFont(new java.awt.Font("Tw Cen MT Condensed Extra Bold", 0, 14)); // NOI18N
+        lblGradeIcon.setForeground(new java.awt.Color(47, 56, 120));
+        lblGradeIcon.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        lblGradeIcon.setText("Grade:");
+        pnlDetails.add(lblGradeIcon, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 50, 40, -1));
 
         lblDOB.setFont(new java.awt.Font("Tw Cen MT Condensed Extra Bold", 0, 14)); // NOI18N
         lblDOB.setForeground(new java.awt.Color(47, 56, 120));
@@ -145,7 +148,7 @@ public class MainMenuScreen extends javax.swing.JFrame {
         lblGrade.setText("jLabel4");
         pnlDetails.add(lblGrade, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 50, 90, -1));
 
-        lblProfilePic.setText("jLabel3");
+        lblProfilePic.setText("Icon");
         pnlDetails.add(lblProfilePic, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 80, 170, 120));
 
         jPanel1.add(pnlDetails, new org.netbeans.lib.awtextra.AbsoluteConstraints(570, 60, 190, 210));
@@ -250,11 +253,11 @@ public class MainMenuScreen extends javax.swing.JFrame {
     private javax.swing.JButton btnLogout;
     private javax.swing.JButton btnViewTimetable;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JLabel lblBackground;
     private javax.swing.JLabel lblDOB;
     private javax.swing.JLabel lblGrade;
+    private javax.swing.JLabel lblGradeIcon;
     private javax.swing.JLabel lblProfilePic;
     private javax.swing.JLabel lblStudentName;
     private javax.swing.JLabel lblTitle;
