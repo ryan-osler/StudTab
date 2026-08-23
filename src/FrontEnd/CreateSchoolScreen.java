@@ -133,6 +133,18 @@ public class CreateSchoolScreen extends javax.swing.JFrame {
                 DOB.format(DateTimeFormatter.ofPattern("dd-MM-yyyy"))+"#true#-1#"+txfSubject.getText();
         return temp;
     }
+    private boolean createNotificationsFile(String code){
+        try {
+            FileWriter outFile = new FileWriter("data/"+code+"/Notifications");//data is not added now
+            outFile.close();
+            return true;
+        } catch (IOException ex) {
+            Logger.getLogger(CreateSchoolScreen.class.getName()).log(Level.SEVERE, null, ex);
+            System.out.println("Couldnt create Notifications file");
+            lblError.setText("Couldnt create Notifications file");
+        }
+        return false;
+    }
     private boolean createSchoolInfoFile(String name, String code, LocalDate date, boolean isHigh){
         try {
             FileWriter outFile = new FileWriter("data/"+code+"/SchoolInfo");
@@ -346,6 +358,9 @@ public class CreateSchoolScreen extends javax.swing.JFrame {
                     outFile.close();
                 
                     createTimttableFile(schoolCode);//creates timetable file without any content
+                    outFile.close();
+                    
+                    createNotificationsFile(schoolCode);//same for notifications
                     outFile.close();
                 
                     LoginScreen ls = new LoginScreen();

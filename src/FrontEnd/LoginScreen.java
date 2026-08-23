@@ -4,6 +4,7 @@
  */
 package FrontEnd;
 
+import BackEnd.NotificationManager;
 import BackEnd.Student;
 import BackEnd.Teacher;
 import BackEnd.TimetableManager;
@@ -67,6 +68,11 @@ public class LoginScreen extends javax.swing.JFrame {
             TimetableManager.setCurrentUser(user);
             TimetableManager.setSchoolCode(schoolcode);
             UserManager.loadInfo(schoolcode);
+            
+            NotificationManager.setSchoolCode(schoolcode);
+            if (NotificationManager.loadInfo()) {
+                System.out.println("Notifications Loaded");
+            }
             
             MainMenuScreen mm = new MainMenuScreen();
             mm.setVisible(true);
@@ -271,7 +277,11 @@ public class LoginScreen extends javax.swing.JFrame {
                     } catch (IOException ex) {
                         Logger.getLogger(LoginScreen.class.getName()).log(Level.SEVERE, null, ex);
                     }
-                
+                    NotificationManager.setSchoolCode(schoolcode);
+                    if (NotificationManager.loadInfo()) {
+                        System.out.println("Notifications Loaded");
+                    }
+                    
                     MainMenuScreen mm = new MainMenuScreen();
                     mm.setVisible(true);
                     this.dispose();

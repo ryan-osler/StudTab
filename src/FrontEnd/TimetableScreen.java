@@ -5,7 +5,9 @@
 package FrontEnd;
 
 import BackEnd.Student;
+import BackEnd.Teacher;
 import BackEnd.TimetableManager;
+import BackEnd.UserManager;
 import java.awt.Color;
 import javax.swing.border.LineBorder;
 import javax.swing.table.DefaultTableModel;
@@ -29,6 +31,10 @@ public class TimetableScreen extends javax.swing.JFrame {
         loadTimetable();
         tblTimetable.setDefaultEditor(Object.class, null);
         btnSetup();
+        if (!(UserManager.getCurrentUser() instanceof Teacher)) {
+            btnInsertTimetableFile.setVisible(false);
+            btnInsertTimetableFile.setEnabled(false);
+        }
     }
     private Student targetStudent;
     public TimetableScreen(MainMenuScreen mm, Student inUser) {
@@ -40,7 +46,10 @@ public class TimetableScreen extends javax.swing.JFrame {
         this.mainMenu = mm;
         loadTargetTimetable();
         btnSetup();
-        
+        if (!(UserManager.getCurrentUser() instanceof Teacher)) {
+            btnInsertTimetableFile.setVisible(false);
+            btnInsertTimetableFile.setEnabled(false);
+        }
     }
     
     public TimetableScreen(){
@@ -50,6 +59,10 @@ public class TimetableScreen extends javax.swing.JFrame {
         loadTimetable();
         tblTimetable.setDefaultEditor(Object.class, null);
         btnSetup();
+        if (!(UserManager.getCurrentUser() instanceof Teacher)) {
+            btnInsertTimetableFile.setVisible(false);
+            btnInsertTimetableFile.setEnabled(false);
+        }
     }
     
     private void btnSetup(){//hovver effect for buttons. this shiz took so long
@@ -227,6 +240,11 @@ public class TimetableScreen extends javax.swing.JFrame {
         btnInsertTimetableFile.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(47, 56, 120)));
         btnInsertTimetableFile.setContentAreaFilled(false);
         btnInsertTimetableFile.setFocusPainted(false);
+        btnInsertTimetableFile.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnInsertTimetableFileActionPerformed(evt);
+            }
+        });
         jPanel1.add(btnInsertTimetableFile, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 450, -1, -1));
 
         jPanel2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -278,6 +296,12 @@ public class TimetableScreen extends javax.swing.JFrame {
         mainMenu.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btnReturnToMainMenuActionPerformed
+
+    private void btnInsertTimetableFileActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInsertTimetableFileActionPerformed
+        InsertTimetableFileScreen it = new InsertTimetableFileScreen(mainMenu);
+        it.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_btnInsertTimetableFileActionPerformed
 
     /**
      * @param args the command line arguments

@@ -6,6 +6,8 @@ package BackEnd;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.Scanner;
 
 /**
@@ -91,6 +93,80 @@ public class TimetableManager {
     }
     public static String getSchoolCode(){
         return schoolCode;
+    }
+    
+    public static void updateFile(){//same method as in UserManager
+        String temp = "";
+        for (int i = 0; i < tArr.length; i++) {
+            temp += tArr[i].printTimetable()+"\n";
+        }
+        
+        try{
+            FileWriter outFile = new FileWriter("data/"+getSchoolCode()+"/Timetables");
+            outFile.write(temp);
+            outFile.close();
+            System.out.println("Updated Timetables File");
+        }catch(IOException ex){
+            System.out.println("Couldn't write to file:\n"+ex);
+        }
+        
+    }
+    
+    public static void addTimetable(Timetable inTimetable){
+        Timetable[] temp = new Timetable[tArr.length+1];
+        for (int i = 0; i < tArr.length; i++) {
+            temp[i] = tArr[i];
+        }
+        temp[tArr.length] = inTimetable;
+        tArr = temp;
+        updateFile();
+    }
+    
+    public static void editTimetable(Timetable inTimetable){
+        for (int i = 0; i < tArr.length; i++) {
+            if (tArr[i].getEmail().equals(inTimetable.getEmail())) {
+                tArr[i] = inTimetable;
+                System.out.println("Updated Timetable, index of:\t"+inTimetable.getID());
+            }
+        }
+        updateFile();
+    }
+    
+    public static void deleteTimetable(Timetable inTimetable){
+        int size = 0;
+        for (int i = 0; i < tArr.length; i++) {
+            if (!(tArr[i].getEmail().equals(inTimetable.getEmail())) && tArr[i].getDay() == inTimetable.getDay()) {//has to check that the day also matches as the email is repeated and thus not unique.
+                size++;
+            }
+        }
+        int count = 0;
+        Timetable[] temp = new Timetable[size];
+        for (int i = 0; i < tArr.length; i++) {
+            if (!(tArr[i].getEmail().equals(inTimetable.getEmail())) && tArr[i].getDay() == inTimetable.getDay()) {
+                temp[count] = tArr[i];
+                count++;
+            }
+        }
+        tArr = temp;
+        updateFile();
+        System.out.println("Timetable entry deleted");
+    }
+    
+    public static Timetable getTimetable(String inEmail, int inDay){
+        for (int i = 0; i < tArr.length; i++) {
+            if (tArr[i].getEmail().equals(inEmail) && tArr[i].getDay() == inDay) {
+                return tArr[i];
+            }
+        }
+        return null;
+    }
+    
+    public static String getKeys(){//this method can be used the check alll private keys since there isnt a way to uniquely identify each field.
+        String temp = "";
+        for (int i = 0; i < tArr.length; i++) {
+            temp += tArr[i].getEmail()+tArr[i].getDay()+"\n";
+        }
+        return temp;
     }
     
 }

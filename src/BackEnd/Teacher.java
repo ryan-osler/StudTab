@@ -17,10 +17,13 @@ public class Teacher extends Student
         super (inName, inSurname, inEmail, inPassword, inDOB, -1, inAdmin);
         subject = inSubject;
     }
-    public String getSubject(){
+    @Override
+    public String getSubject(){//overriden method from parent class
         return subject;
     }
-    public String printTeacher(){
+    
+    
+    public String printTeacher(){//does not override as method is different name in parent class
         return name+"#"+surname+"#"+email+"#"+password+"#"+DOB.format(DateTimeFormatter.ofPattern("dd-MM-yyyy"))+"#"+isAdmin+"#-1#"+subject;
     }
     

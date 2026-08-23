@@ -38,4 +38,11 @@ public class Timetable {
         }
         return scLessons.next();
     }
+    public String printTimetable(){
+        return ID+"#"+email+"#"+day+"#"+lessons;
+    }
+
+    public int getID() {
+        return ID;
+    }
 }
