@@ -33,6 +33,7 @@ public class MainMenuScreen extends javax.swing.JFrame {
         jScrollPane1.setVisible(false);//note for self, how to propperly hide element.
         setupNotifications();
         
+        
         lblDOB.setText(UserManager.getCurrentUser().getDOB());
         lblStudentName.setText(UserManager.getCurrentUser().getName()+" "+UserManager.getCurrentUser().getSurname());
         if (UserManager.getCurrentUser() instanceof Teacher) {
@@ -64,8 +65,12 @@ public class MainMenuScreen extends javax.swing.JFrame {
         
         btnViewTimetable.setBorder(BorderFactory.createEmptyBorder(10, 20, 10, 20));//rounded edges
         if (!UserManager.getCurrentUser().getIsAdmin()) {
-            btnAddStudent.setEnabled(false);
-            btnAddStudent.setVisible(false);
+            btnViewStudents.setEnabled(false);
+            btnViewStudents.setVisible(false);
+        }
+        if (!UserManager.getCurrentUser().getIsAdmin()) {
+            btnAnnouncements.setVisible(false);
+            btnAnnouncements.setEnabled(false);
         }
     }
     
@@ -80,10 +85,13 @@ public class MainMenuScreen extends javax.swing.JFrame {
         lstNotifications.setModel(notificationsModel);// replaces NetBeans' fixed placeholder model
         String temp = "Notification added:\t";
         int numNotif = NotificationManager.getNumNotificationsForUser(UserManager.getCurrentUser());
+        if (numNotif <=0) {
+            return false;
+        }
         String[] notif = new String[numNotif];
         notif = NotificationManager.getNotificationsForUser(UserManager.getCurrentUser());
         for (int i = 0; i < numNotif; i++) {
-            notificationsModel.addElement(notif[i]);
+            notificationsModel.addElement(NotificationManager.decryptMessage(notif[i]));
             temp+= notif[i] + "\t";
         }
         System.out.println(temp);
@@ -110,11 +118,12 @@ public class MainMenuScreen extends javax.swing.JFrame {
         lblDOB = new javax.swing.JLabel();
         lblGrade = new javax.swing.JLabel();
         lblProfilePic = new javax.swing.JLabel();
-        btnAddStudent = new javax.swing.JButton();
+        btnViewStudents = new javax.swing.JButton();
         btnLogout = new javax.swing.JButton();
         btnNotifications = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         lstNotifications = new javax.swing.JList<>();
+        btnAnnouncements = new javax.swing.JButton();
         lblBackground = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -180,18 +189,18 @@ public class MainMenuScreen extends javax.swing.JFrame {
 
         pnlMainMenu.add(pnlDetails, new org.netbeans.lib.awtextra.AbsoluteConstraints(580, 100, 190, 210));
 
-        btnAddStudent.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/btnViewStudents.png"))); // NOI18N
-        btnAddStudent.setBorderPainted(false);
-        btnAddStudent.setContentAreaFilled(false);
-        btnAddStudent.setFocusPainted(false);
-        btnAddStudent.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/btnRollViewStudents.png"))); // NOI18N
-        btnAddStudent.setSelectedIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/btnViewStudents.png"))); // NOI18N
-        btnAddStudent.addActionListener(new java.awt.event.ActionListener() {
+        btnViewStudents.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/btnViewStudents.png"))); // NOI18N
+        btnViewStudents.setBorderPainted(false);
+        btnViewStudents.setContentAreaFilled(false);
+        btnViewStudents.setFocusPainted(false);
+        btnViewStudents.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/btnRollViewStudents.png"))); // NOI18N
+        btnViewStudents.setSelectedIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/btnViewStudents.png"))); // NOI18N
+        btnViewStudents.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnAddStudentActionPerformed(evt);
+                btnViewStudentsActionPerformed(evt);
             }
         });
-        pnlMainMenu.add(btnAddStudent, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 170, 177, 50));
+        pnlMainMenu.add(btnViewStudents, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 170, 177, 50));
 
         btnLogout.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/btnLogout.png"))); // NOI18N
         btnLogout.setBorderPainted(false);
@@ -224,6 +233,14 @@ public class MainMenuScreen extends javax.swing.JFrame {
 
         pnlMainMenu.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 10, 200, 80));
 
+        btnAnnouncements.setText("Announcements");
+        btnAnnouncements.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAnnouncementsActionPerformed(evt);
+            }
+        });
+        pnlMainMenu.add(btnAnnouncements, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 260, -1, -1));
+
         lblBackground.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/loginBackground.png"))); // NOI18N
         pnlMainMenu.add(lblBackground, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 800, 450));
 
@@ -251,11 +268,11 @@ public class MainMenuScreen extends javax.swing.JFrame {
         this.dispose();
     }//GEN-LAST:event_btnLogoutActionPerformed
 
-    private void btnAddStudentActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddStudentActionPerformed
+    private void btnViewStudentsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnViewStudentsActionPerformed
         ManageStudentsScreen ms  = new ManageStudentsScreen(this);
         ms.setVisible(true);
         this.setVisible(false);
-    }//GEN-LAST:event_btnAddStudentActionPerformed
+    }//GEN-LAST:event_btnViewStudentsActionPerformed
 
     private void btnNotificationsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNotificationsActionPerformed
         if (lstNotifications.isVisible()) {
@@ -267,6 +284,12 @@ public class MainMenuScreen extends javax.swing.JFrame {
         }
         
     }//GEN-LAST:event_btnNotificationsActionPerformed
+
+    private void btnAnnouncementsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAnnouncementsActionPerformed
+        AnnouncementScreen as  = new AnnouncementScreen(this);
+        as.setVisible(true);
+        this.setVisible(false);
+    }//GEN-LAST:event_btnAnnouncementsActionPerformed
 
     /**
      * @param args the command line arguments
@@ -304,9 +327,10 @@ public class MainMenuScreen extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnAddStudent;
+    private javax.swing.JButton btnAnnouncements;
     private javax.swing.JButton btnLogout;
     private javax.swing.JButton btnNotifications;
+    private javax.swing.JButton btnViewStudents;
     private javax.swing.JButton btnViewTimetable;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;

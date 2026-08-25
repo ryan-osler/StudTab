@@ -5,6 +5,7 @@
 package BackEnd;
 
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 
 /**
  *
@@ -46,7 +47,7 @@ public class Notification {
     }
 
     public String printNotification() {
-        return sender + "#" + forAll + "#" + receiver + "#" + uploadDate + "#" + content;
+        return sender + "#" + forAll + "#" + receiver + "#" + uploadDate.format(DateTimeFormatter.ofPattern("dd-MM-yyyy")) + "#" + content;
     }
     
 }

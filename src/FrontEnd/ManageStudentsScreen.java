@@ -608,7 +608,7 @@ public class ManageStudentsScreen extends javax.swing.JFrame {
                 btnMainMenuActionPerformed(evt);
             }
         });
-        jPanel1.add(btnMainMenu, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 480, 90, -1));
+        jPanel1.add(btnMainMenu, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 20, 90, -1));
 
         lblError.setForeground(new java.awt.Color(204, 0, 0));
         lblError.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);

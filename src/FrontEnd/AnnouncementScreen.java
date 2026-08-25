@@ -4,11 +4,15 @@
  */
 package FrontEnd;
 
+import BackEnd.EmailManager;
 import BackEnd.Notification;
 import BackEnd.NotificationManager;
+import BackEnd.TimetableManager;
 import BackEnd.UserManager;
 import java.awt.Color;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import javax.swing.border.LineBorder;
 
 /**
  *
@@ -19,19 +23,26 @@ public class AnnouncementScreen extends javax.swing.JFrame {
     /**
      * Creates new form AnnouncementScreen
      */
+    
+    private MainMenuScreen mainMenu;
     public AnnouncementScreen() {
-        Notification temp;
+        
         initComponents();
+        btnSetup();
         setLocationRelativeTo(null);
         lblError.setText("");
         lblError.setForeground(Color.red);
-        if (validateInfo()) {//when creating the notification, we decrypt the contents calling the method, decryoptMessage
-            temp = new Notification(UserManager.getCurrentUser().getEmail(), cbxForAll.isSelected(),
-                     txfTo.getText(), LocalDate.now(), NotificationManager.decryptMessage(txaBody.getText()));
-            if (cbxNotification.isSelected()) {
-                NotificationManager.addNotification(temp);
-            }
-        }
+        
+    }
+    public AnnouncementScreen(MainMenuScreen mm) {//repeat to carry over instance of main menu
+        
+        initComponents();
+        btnSetup();
+        this.mainMenu = mm;
+        setLocationRelativeTo(null);
+        lblError.setText("");
+        lblError.setForeground(Color.red);
+        
     }
     
     private boolean validateInfo(){
@@ -50,6 +61,66 @@ public class AnnouncementScreen extends javax.swing.JFrame {
         }
         return true;
     }
+    
+    private void btnSetup(){//hovver effect for buttons. this shiz took so long
+        Color norm = new Color(47,56,120);
+        btnMainMenu.addMouseListener(new java.awt.event.MouseAdapter() {
+            @Override
+            public void mouseEntered(java.awt.event.MouseEvent evt){
+                btnMainMenu.setForeground(Color.WHITE);
+                btnMainMenu.setBorder(new LineBorder(Color.WHITE));
+            }
+            @Override
+            public void mouseExited(java.awt.event.MouseEvent evt){
+                btnMainMenu.setForeground(norm);
+                btnMainMenu.setBorder(new LineBorder(norm));
+            }
+            @Override
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                btnMainMenu.setForeground(norm);
+                btnMainMenu.setBorder(new LineBorder(norm));
+            }
+            @Override
+            public void mouseReleased(java.awt.event.MouseEvent evt){
+                if (btnMainMenu.contains(evt.getPoint())) {
+                    btnMainMenu.setForeground(Color.WHITE);
+                    btnMainMenu.setBorder(new LineBorder(Color.WHITE));
+                }else{
+                    btnMainMenu.setForeground(norm);
+                    btnMainMenu.setBorder(new LineBorder(norm));
+                }
+                
+            }
+        });
+        btnPublish.addMouseListener(new java.awt.event.MouseAdapter() {
+            @Override
+            public void mouseEntered(java.awt.event.MouseEvent evt){
+                btnPublish.setForeground(Color.WHITE);
+                btnPublish.setBorder(new LineBorder(Color.WHITE));
+            }
+            @Override
+            public void mouseExited(java.awt.event.MouseEvent evt){
+                btnPublish.setForeground(norm);
+                btnPublish.setBorder(new LineBorder(norm));
+            }
+            @Override
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                btnPublish.setForeground(norm);
+                btnPublish.setBorder(new LineBorder(norm));
+            }
+            @Override
+            public void mouseReleased(java.awt.event.MouseEvent evt){
+                if (btnPublish.contains(evt.getPoint())) {
+                    btnPublish.setForeground(Color.WHITE);
+                    btnPublish.setBorder(new LineBorder(Color.WHITE));
+                }else{
+                    btnPublish.setForeground(norm);
+                    btnPublish.setBorder(new LineBorder(norm));
+                }
+                
+            }
+        });
+        }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -73,6 +144,7 @@ public class AnnouncementScreen extends javax.swing.JFrame {
         cbxNotification = new javax.swing.JCheckBox();
         btnPublish = new javax.swing.JButton();
         lblError = new javax.swing.JLabel();
+        btnMainMenu = new javax.swing.JButton();
         lblBackground = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -154,12 +226,30 @@ public class AnnouncementScreen extends javax.swing.JFrame {
         btnPublish.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(47, 57, 120)));
         btnPublish.setContentAreaFilled(false);
         btnPublish.setFocusPainted(false);
-        pnlMain.add(btnPublish, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 390, 80, -1));
+        btnPublish.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnPublishActionPerformed(evt);
+            }
+        });
+        pnlMain.add(btnPublish, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 390, 80, -1));
 
         lblError.setForeground(new java.awt.Color(153, 0, 0));
         lblError.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lblError.setText("lblError");
-        pnlMain.add(lblError, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 360, 230, -1));
+        pnlMain.add(lblError, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 350, 230, -1));
+
+        btnMainMenu.setFont(new java.awt.Font("Tw Cen MT Condensed Extra Bold", 0, 18)); // NOI18N
+        btnMainMenu.setForeground(new java.awt.Color(47, 56, 120));
+        btnMainMenu.setText("Main Menu");
+        btnMainMenu.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(47, 56, 120)));
+        btnMainMenu.setContentAreaFilled(false);
+        btnMainMenu.setFocusPainted(false);
+        btnMainMenu.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnMainMenuActionPerformed(evt);
+            }
+        });
+        pnlMain.add(btnMainMenu, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 20, 90, -1));
 
         lblBackground.setFont(new java.awt.Font("Tw Cen MT Condensed Extra Bold", 0, 14)); // NOI18N
         lblBackground.setForeground(new java.awt.Color(47, 56, 120));
@@ -191,6 +281,38 @@ public class AnnouncementScreen extends javax.swing.JFrame {
     private void cbxNotificationActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbxNotificationActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_cbxNotificationActionPerformed
+
+    private void btnPublishActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPublishActionPerformed
+        Notification temp;
+        if (validateInfo()) {//when creating the notification, we decrypt the contents calling the method, decryoptMessage
+            temp = new Notification(UserManager.getCurrentUser().getEmail(), cbxForAll.isSelected(),
+                     txfTo.getText(), LocalDate.now(), NotificationManager.encryptMessage(txaBody.getText()));
+            if (cbxNotification.isSelected()) {
+                NotificationManager.addNotification(temp);
+            }
+            if (cbxEmail.isSelected()) {
+                if (cbxForAll.isSelected()) {
+                    String body;
+                    body = "A new notification has been published by: " 
+                            +UserManager.getCurrentUser().getName() + " " + UserManager.getCurrentUser().getSurname()+ " on "
+                            + LocalDate.now().format(DateTimeFormatter.ofPattern("dd-MM-yyyy")) +"\n" +txaBody.getText() +"\n\n"
+                            + "Email sent to all users by StudTab";
+                }else{
+                    EmailManager.sendEmail(txfTo.getText(), "New Notification", "A new notification has been published by: " 
+                            +UserManager.getCurrentUser().getName() + " " + UserManager.getCurrentUser().getSurname()+ " on " 
+                            + LocalDate.now().format(DateTimeFormatter.ofPattern("dd-MM-yyyy")) +"\n" +txaBody.getText());
+                            
+                }
+            }
+        }else{
+            System.out.println("Invalid Info. Couldnt publish");
+        }
+    }//GEN-LAST:event_btnPublishActionPerformed
+
+    private void btnMainMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMainMenuActionPerformed
+        mainMenu.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_btnMainMenuActionPerformed
 
     /**
      * @param args the command line arguments
@@ -228,6 +350,7 @@ public class AnnouncementScreen extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnMainMenu;
     private javax.swing.JButton btnPublish;
     private javax.swing.JCheckBox cbxEmail;
     private javax.swing.JCheckBox cbxForAll;

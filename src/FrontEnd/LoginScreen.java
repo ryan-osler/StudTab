@@ -278,7 +278,7 @@ public class LoginScreen extends javax.swing.JFrame {
                     } catch (IOException ex) {
                         Logger.getLogger(LoginScreen.class.getName()).log(Level.SEVERE, null, ex);
                     }
-                    NotificationManager.setSchoolCode(schoolcode);
+                    NotificationManager.setSchoolCode(schoolCode);
                     if (NotificationManager.loadInfo()) {
                         System.out.println("Notifications Loaded");
                     }

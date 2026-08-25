@@ -42,6 +42,8 @@ public class NotificationManager {
         int count = 0;
         if (size <= 0) {
             System.out.println("Size <= 0 // no notifications");
+            nArr = new Notification[0];
+            loaded = true;
             return false;
             
         }
@@ -68,7 +70,7 @@ public class NotificationManager {
         return true;
     }
     
-    public static String[] getReceivers(Notification inNotif){
+    public static String[] getReceivers(Notification inNotif){//this needs fixing
         if (!loaded) {
             loadInfo();
         }
