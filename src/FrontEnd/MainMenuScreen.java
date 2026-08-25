@@ -148,7 +148,7 @@ public class MainMenuScreen extends javax.swing.JFrame {
         lblStudentName.setFont(new java.awt.Font("Tw Cen MT Condensed Extra Bold", 0, 14)); // NOI18N
         lblStudentName.setForeground(new java.awt.Color(47, 56, 120));
         lblStudentName.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lblStudentName.setText("jLabel1");
+        lblStudentName.setText("name");
         pnlDetails.add(lblStudentName, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 170, -1));
 
         jLabel1.setFont(new java.awt.Font("Tw Cen MT Condensed Extra Bold", 0, 14)); // NOI18N
@@ -166,13 +166,13 @@ public class MainMenuScreen extends javax.swing.JFrame {
         lblDOB.setFont(new java.awt.Font("Tw Cen MT Condensed Extra Bold", 0, 14)); // NOI18N
         lblDOB.setForeground(new java.awt.Color(47, 56, 120));
         lblDOB.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        lblDOB.setText("jLabel3");
+        lblDOB.setText("date of birth");
         pnlDetails.add(lblDOB, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 30, 100, -1));
 
         lblGrade.setFont(new java.awt.Font("Tw Cen MT Condensed Extra Bold", 0, 14)); // NOI18N
         lblGrade.setForeground(new java.awt.Color(47, 56, 120));
         lblGrade.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        lblGrade.setText("jLabel4");
+        lblGrade.setText("grade / subject");
         pnlDetails.add(lblGrade, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 50, 90, -1));
 
         lblProfilePic.setText("Icon");

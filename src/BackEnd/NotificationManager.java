@@ -6,6 +6,10 @@ package BackEnd;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.lang.System.Logger;
+import java.lang.System.Logger.Level;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Scanner;
@@ -158,5 +162,75 @@ public class NotificationManager {
         }
         return null;
     }
+    public static void updateFile(){//all these methods are like a repeat of the usermanager and timetablemanager classes
+        String temp = "";
+        for (int i = 0; i < nArr.length; i++) {
+            temp += nArr[i].printNotification()+"\n";
+        }
+        try {
+            FileWriter outFile = new FileWriter("data/" + currentSchoolCode + "/Notifications.txt");
+            outFile.write(temp);
+            outFile.close();
+            System.out.println("Updated Notifications");
+        } catch (IOException ex) {
+            System.out.println("Error. Couldnt find notifications file when updating file\n" +ex + "\n\n");
+        }
+    }
+    
+    public static void addNotification(Notification inNotif){
+        Notification[] temp = new Notification[nArr.length+1];
+        for (int i = 0; i < nArr.length; i++) {
+            temp[i] = nArr[i];
+        }
+        temp[nArr.length] = inNotif;
+        nArr = temp;
+        updateFile();
+    }
 
+    public static void editNotification(Notification inNotif){
+        for (int i = 0; i < nArr.length; i++) {
+            if (nArr[i].getSender().equals(inNotif.getSender())
+                    && nArr[i].getReceiver().equals(inNotif.getReceiver())
+                    && nArr[i].getUploadDate().equals(inNotif.getUploadDate())) {
+                nArr[i] = inNotif;
+                System.out.println("Updated Notification");
+            }
+        }
+        updateFile();
+    }
+
+    public static void deleteNotification(Notification inNotif){
+        int size = 0;
+        for (int i = 0; i < nArr.length; i++) {
+            if (!(nArr[i].getSender().equals(inNotif.getSender())
+                    && nArr[i].getReceiver().equals(inNotif.getReceiver())
+                    && nArr[i].getUploadDate().equals(inNotif.getUploadDate()))) {
+                size++;
+            }
+        }
+        int count = 0;
+        Notification temp[] = new Notification[size];
+        for (int i = 0; i < nArr.length; i++) {
+            if (!(nArr[i].getSender().equals(inNotif.getSender())
+                    && nArr[i].getReceiver().equals(inNotif.getReceiver())
+                    && nArr[i].getUploadDate().equals(inNotif.getUploadDate()))) {
+                temp[count] = nArr[i];
+                count++;
+            }
+        }
+        nArr = temp;
+        updateFile();
+        System.out.println("Notification Deleted");
+    }
+    
+    public static Notification getNotification(String inSender, String inReceiver, java.time.LocalDate inDate){
+        for (int i = 0; i < nArr.length; i++) {
+            if (nArr[i].getSender().equals(inSender)
+                    && nArr[i].getReceiver().equals(inReceiver)
+                    && nArr[i].getUploadDate().equals(inDate)) {
+                return nArr[i];
+            }
+        }
+        return null;
+    }
 }

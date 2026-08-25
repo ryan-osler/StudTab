@@ -4,6 +4,7 @@
  */
 package FrontEnd;
 
+import BackEnd.EmailManager;
 import java.awt.Color;
 import java.io.File;
 import java.io.FileWriter;
@@ -362,6 +363,12 @@ public class CreateSchoolScreen extends javax.swing.JFrame {
                     
                     createNotificationsFile(schoolCode);//same for notifications
                     outFile.close();
+                    
+                    EmailManager.sendEmail(txfEmail.getText(), "School Created: " + schoolName,
+                            "Your school profile has been created on : " + LocalDate.now().format(DateTimeFormatter.ofPattern("dd-MM-yyyy"))
+                            + "\nSchool Code: " + schoolCode + "\nFounding Date: " + foundingDate + "\n\nAdmin Details:\nName: " + txfName.getText() +" "
+                            + txfSurname.getText() + "\nDate Of Birth: " + dpDOB.getDate().format(DateTimeFormatter.ofPattern("dd-MM-yyyy"))
+                            + "\nSubject: " + txfSubject.getText());
                 
                     LoginScreen ls = new LoginScreen();
                     ls.setVisible(true);

@@ -44,5 +44,9 @@ public class Notification {
     public String getContent() {
         return content;
     }
+
+    public String printNotification() {
+        return sender + "#" + forAll + "#" + receiver + "#" + uploadDate + "#" + content;
+    }
     
 }
