@@ -233,13 +233,17 @@ public class MainMenuScreen extends javax.swing.JFrame {
 
         pnlMainMenu.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 10, 200, 80));
 
-        btnAnnouncements.setText("Announcements");
+        btnAnnouncements.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/btnAnnouncements.png"))); // NOI18N
+        btnAnnouncements.setBorderPainted(false);
+        btnAnnouncements.setContentAreaFilled(false);
+        btnAnnouncements.setFocusPainted(false);
+        btnAnnouncements.setSelectedIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/btnAnnouncements.png"))); // NOI18N
         btnAnnouncements.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnAnnouncementsActionPerformed(evt);
             }
         });
-        pnlMainMenu.add(btnAnnouncements, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 260, -1, -1));
+        pnlMainMenu.add(btnAnnouncements, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 250, -1, -1));
 
         lblBackground.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/loginBackground.png"))); // NOI18N
         pnlMainMenu.add(lblBackground, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 800, 450));
