@@ -237,13 +237,14 @@ public class MainMenuScreen extends javax.swing.JFrame {
         btnAnnouncements.setBorderPainted(false);
         btnAnnouncements.setContentAreaFilled(false);
         btnAnnouncements.setFocusPainted(false);
+        btnAnnouncements.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/btnAnnouncements.png"))); // NOI18N
         btnAnnouncements.setSelectedIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/btnAnnouncements.png"))); // NOI18N
         btnAnnouncements.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnAnnouncementsActionPerformed(evt);
             }
         });
-        pnlMainMenu.add(btnAnnouncements, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 250, -1, -1));
+        pnlMainMenu.add(btnAnnouncements, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 250, 177, 50));
 
         lblBackground.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/loginBackground.png"))); // NOI18N
         pnlMainMenu.add(lblBackground, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 800, 450));

@@ -17,13 +17,13 @@ import java.time.format.DateTimeFormatter;
  * @author ryano
  */
 public class Student {
-    String name;
-    String surname;
-    String email;
-    String password;
-    LocalDate DOB;
+    protected String name;
+    protected String surname;
+    protected String email;
+    protected String password;
+    protected LocalDate DOB;
     private int grade;
-    boolean isAdmin;
+    protected boolean isAdmin;
     private int age;
     
     /**

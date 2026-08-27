@@ -256,7 +256,7 @@ public class UserManager {//establish fields
         return null;
     }
     
-    public void sendAllEmail(String inSubject, String inBody){
+    public static void sendAllEmail(String inSubject, String inBody){
         for (int i = 0; i < userArr.length; i++) {
             EmailManager.sendEmail(userArr[i].getEmail(), inSubject, inBody);
         }
