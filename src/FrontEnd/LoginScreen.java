@@ -4,6 +4,7 @@
  */
 package FrontEnd;
 
+import BackEnd.IdleManager;
 import BackEnd.NotificationManager;
 import BackEnd.Student;
 import BackEnd.Teacher;
@@ -68,6 +69,7 @@ public class LoginScreen extends javax.swing.JFrame {
             TimetableManager.setCurrentUser(user);
             TimetableManager.setSchoolCode(schoolcode);
             UserManager.loadInfo(schoolcode);
+            IdleManager.Start();
             
             NotificationManager.setSchoolCode(schoolcode);
             if (NotificationManager.loadInfo()) {
@@ -262,6 +264,7 @@ public class LoginScreen extends javax.swing.JFrame {
                     UserManager.setCurrentUser(User);
                     TimetableManager.setCurrentUser(User);
                     TimetableManager.setSchoolCode(schoolCode);
+                    IdleManager.Start();
                     
                     try {
                         FileWriter prevLogin = new FileWriter("PrevLogin.txt");
