@@ -261,7 +261,6 @@ public class InsertTimetableFileScreen extends javax.swing.JFrame {
         lblDropFileHere.setText("Drop File Here");
         pnlDropFile.add(lblDropFileHere, new org.netbeans.lib.awtextra.AbsoluteConstraints(125, 100, -1, -1));
 
-        txaFilePreview.setBackground(new java.awt.Color(255, 255, 255));
         txaFilePreview.setBorder(null);
         txaFilePreview.setDisabledTextColor(new java.awt.Color(255, 255, 255));
         jScrollPane1.setViewportView(txaFilePreview);
@@ -281,11 +280,11 @@ public class InsertTimetableFileScreen extends javax.swing.JFrame {
                 btnSaveActionPerformed(evt);
             }
         });
-        jPanel1.add(btnSave, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 360, 70, -1));
+        jPanel1.add(btnSave, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 360, 80, -1));
 
         btnClose.setFont(new java.awt.Font("Tw Cen MT Condensed Extra Bold", 0, 18)); // NOI18N
         btnClose.setForeground(new java.awt.Color(47, 56, 120));
-        btnClose.setText("Close");
+        btnClose.setText("Main Menu");
         btnClose.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(47, 56, 120)));
         btnClose.setContentAreaFilled(false);
         btnClose.setFocusPainted(false);
@@ -294,7 +293,7 @@ public class InsertTimetableFileScreen extends javax.swing.JFrame {
                 btnCloseActionPerformed(evt);
             }
         });
-        jPanel1.add(btnClose, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 360, 70, -1));
+        jPanel1.add(btnClose, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 360, 90, -1));
 
         lblBackground.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/loginBackground.png"))); // NOI18N
         lblBackground.setText("jLabel1");

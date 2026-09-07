@@ -18,6 +18,7 @@ public class IdleManager {
     private static final int IDLE_TIME= 30 * 60 * 1000; // 30 min
     
     public static void Start(){
+        // One-shot timer: exits app if it ever completes uninterrupted
         timer = new Timer(IDLE_TIME, e-> {
             System.out.println("User ddling, CLosing application");
             System.exit(0);

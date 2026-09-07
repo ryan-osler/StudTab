@@ -19,6 +19,14 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.*;
 import javax.swing.border.LineBorder;
+import javax.imageio.ImageIO;
+import java.awt.image.BufferedImage;
+import java.awt.dnd.DropTarget;
+import java.awt.dnd.DropTargetAdapter;
+import java.awt.dnd.DropTargetDropEvent;
+import java.awt.dnd.DropTargetDragEvent;
+import java.awt.dnd.DropTargetEvent;
+import java.awt.dnd.DnDConstants;
 
 /**
  *
@@ -38,6 +46,7 @@ public class AddUserScreen extends javax.swing.JFrame {
         btnSetup();
         this.mainMenu = mm;
         lblError.setText("");
+        dragDropSetup();
     }
     
     public AddUserScreen(){
@@ -47,6 +56,7 @@ public class AddUserScreen extends javax.swing.JFrame {
         TimetableManager.setSchoolCode("SJC001");
         btnSetup();
         lblError.setText("");
+        dragDropSetup();
     }
     private void btnSetup(){//hovver effect for buttons. this shiz took so long
         Color norm = new Color(47,56,120);
@@ -107,25 +117,84 @@ public class AddUserScreen extends javax.swing.JFrame {
             }
         });
     }
+    
+    private boolean validateInfo(){
+         String emailRegex = "^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}$";
+        if (txfName.getText().isEmpty() || txfSurname.getText().isEmpty() || txfEmail.getText().isEmpty() 
+                || txfGrSub.getText().isEmpty() || txfPassword.getText().isEmpty() || dpDOB.getDate() == null) {
+            lblError.setText("Missing Information");
+            lblError.setForeground(Color.red);
+            return false;
+        }else if (!txfEmail.getText().matches(emailRegex)) {
+            lblError.setText("Incorrect Email Format");
+            return false;
+        } else if ((txfName.getText() + txfSurname.getText() + txfPassword.getText() + txfEmail.getText() + txfGrSub.getText()).contains("#")) {
+            lblError.setText("Cannot Contain a #");
+            lblError.setForeground(Color.red);
+            return false;
+        }
+        return true;
+    }
+    
     private void dragDropSetup(){
-        pnlFile.setTransferHandler(new TransferHandler() {
+        final javax.swing.border.Border normalBorder = pnlFile.getBorder();
+        final javax.swing.border.Border hoverBorder = javax.swing.BorderFactory.createLineBorder(Color.GREEN, 3);
+        
+        new DropTarget(pnlFile, new DropTargetAdapter(){
+            
             @Override
-            public boolean canImport(TransferSupport support) {
-                return support.isDataFlavorSupported(DataFlavor.javaFileListFlavor);
+            public void dragEnter(DropTargetDragEvent evt){
+                pnlFile.setBorder(hoverBorder);
             }
+            
             @Override
-            public boolean importData(TransferSupport support) {
+            public void dragExit(DropTargetEvent evt){
+                pnlFile.setBorder(normalBorder);
+            }
+            
+            @Override
+            public void drop(DropTargetDropEvent evt){
+                pnlFile.setBorder(normalBorder); // reset border regardless of outcome
+                
                 try{
-                    List<File> files = (List<File>) support.getTransferable()
-                        .getTransferData(DataFlavor.javaFileListFlavor);
-                    for (File file : files) {
-                        System.out.println("Dropped: " + file.getAbsolutePath());
+                    evt.acceptDrop(DnDConstants.ACTION_COPY);
+                    
+                    List<File> files = (List<File>)
+                            evt.getTransferable().getTransferData(DataFlavor.javaFileListFlavor);
+                    
+                    if (files.isEmpty()) {
+                        return;
                     }
-                    return true;
-                } catch(Exception e){
-                    e.printStackTrace();
+                    File droppedFile = files.get(0);
+                    
+                    if (!droppedFile.getName().toLowerCase().endsWith(".png")) {
+                        lblError.setText("Please drop a PNG file.");
+                        lblError.setForeground(Color.red);
+                        return;
+                    }
+                    
+                    BufferedImage img = ImageIO.read(droppedFile);
+                    
+                    if (img == null) {
+                        lblError.setText("Couldn't read PNG file.");
+                        lblError.setForeground(Color.red);
+                        return;
+                    }
+                    
+                    if (img.getWidth() != 170 || img.getHeight() != 120) {
+                       lblError.setText("Image must be exactly 170x120 pixels.");
+                        lblError.setForeground(Color.red);
+                        return;
+                    }
+                    
+                    lblPicture.setIcon(new ImageIcon(img));
+                    lblPicture.setText(""); // clear the "Drop Profile Picture Here" placeholder text
+                    lblError.setText("");
+                    
+                }catch(Exception ex){
+                    lblError.setText("Couldn't read file:\n" + ex.getMessage());
+                    lblError.setForeground(Color.red);
                 }
-                return false;
             }
         });
     }
@@ -136,6 +205,8 @@ public class AddUserScreen extends javax.swing.JFrame {
      * regenerated by the Form Editor.
      */
     @SuppressWarnings("unchecked")
+    
+    
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
@@ -154,6 +225,7 @@ public class AddUserScreen extends javax.swing.JFrame {
         txfPassword = new javax.swing.JTextField();
         txfGrSub = new javax.swing.JTextField();
         pnlFile = new javax.swing.JPanel();
+        lblPicture = new javax.swing.JLabel();
         btnAddUser = new javax.swing.JButton();
         btnMainMenu = new javax.swing.JButton();
         dpDOB = new com.github.lgooddatepicker.components.DatePicker();
@@ -224,17 +296,13 @@ public class AddUserScreen extends javax.swing.JFrame {
         jPanel1.add(txfGrSub, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 300, 100, -1));
 
         pnlFile.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(47, 56, 120), 3, true));
+        pnlFile.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        javax.swing.GroupLayout pnlFileLayout = new javax.swing.GroupLayout(pnlFile);
-        pnlFile.setLayout(pnlFileLayout);
-        pnlFileLayout.setHorizontalGroup(
-            pnlFileLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 214, Short.MAX_VALUE)
-        );
-        pnlFileLayout.setVerticalGroup(
-            pnlFileLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 204, Short.MAX_VALUE)
-        );
+        lblPicture.setFont(new java.awt.Font("Tw Cen MT Condensed Extra Bold", 0, 12)); // NOI18N
+        lblPicture.setForeground(new java.awt.Color(47, 56, 120));
+        lblPicture.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblPicture.setText("Drop Profile Picture Here");
+        pnlFile.add(lblPicture, new org.netbeans.lib.awtextra.AbsoluteConstraints(25, 40, 170, 120));
 
         jPanel1.add(pnlFile, new org.netbeans.lib.awtextra.AbsoluteConstraints(570, 120, 220, 210));
 
@@ -264,9 +332,10 @@ public class AddUserScreen extends javax.swing.JFrame {
         jPanel1.add(btnMainMenu, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 450, 100, -1));
         jPanel1.add(dpDOB, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 240, -1, -1));
 
-        lblError.setForeground(new java.awt.Color(204, 0, 0));
+        lblError.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lblError.setText("jLabel1");
-        jPanel1.add(lblError, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 500, 120, -1));
+        lblError.setForeground(new java.awt.Color(204, 0, 0));
+        jPanel1.add(lblError, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 490, 290, -1));
 
         txfBackground.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/loginBackground.png"))); // NOI18N
         txfBackground.setText("Background Icon");
@@ -286,19 +355,22 @@ public class AddUserScreen extends javax.swing.JFrame {
     }//GEN-LAST:event_txfPasswordActionPerformed
 
     private void btnAddUserActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddUserActionPerformed
-        Student temp;
-        if (cbxIsTeacher.isSelected()) {
-            temp = new Teacher(txfName.getText(), txfSurname.getText(), txfEmail.getText(), txfPassword.getText(),
-                    dpDOB.getDate().format(DateTimeFormatter.ofPattern("dd-MM-yyyy")),
-                    -1, true, txfGrSub.getText());
-        } else{
-            temp = new Student(txfName.getText(), txfSurname.getText(), txfEmail.getText(),
-                    txfPassword.getText(), dpDOB.getDate().format(DateTimeFormatter.ofPattern("dd-MM-yyyy")),
-                     Integer.parseInt(txfGrSub.getText()), false);
+        if (validateInfo()) {
+            Student temp;
+            if (cbxIsTeacher.isSelected()) {
+                temp = new Teacher(txfName.getText(), txfSurname.getText(), txfEmail.getText(), txfPassword.getText(),
+                        dpDOB.getDate().format(DateTimeFormatter.ofPattern("dd-MM-yyyy")),
+                        -1, true, txfGrSub.getText());
+            }else{
+                temp = new Student(txfName.getText(), txfSurname.getText(), txfEmail.getText(),
+                        txfPassword.getText(), dpDOB.getDate().format(DateTimeFormatter.ofPattern("dd-MM-yyyy")),
+                         Integer.parseInt(txfGrSub.getText()), false);
+            }    
+            UserManager.addUser(temp);
+            lblError.setForeground(Color.GREEN);
+            lblError.setText("UserAdded");
+            
         }
-        UserManager.addUser(temp);
-        lblError.setForeground(Color.GREEN);
-        lblError.setText("UserAdded");
         
     }//GEN-LAST:event_btnAddUserActionPerformed
 
@@ -354,6 +426,7 @@ public class AddUserScreen extends javax.swing.JFrame {
     private javax.swing.JLabel lblGrSub;
     private javax.swing.JLabel lblName;
     private javax.swing.JLabel lblPassword;
+    private javax.swing.JLabel lblPicture;
     private javax.swing.JLabel lblSurname;
     private javax.swing.JLabel lblTitle;
     private javax.swing.JPanel pnlFile;

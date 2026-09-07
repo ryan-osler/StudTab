@@ -312,12 +312,17 @@ public class CreateSchoolScreen extends javax.swing.JFrame {
         });
         jPanel1.add(btnCreateSchool, new org.netbeans.lib.awtextra.AbsoluteConstraints(610, 480, 100, -1));
 
-        btnBack.setFont(new java.awt.Font("Tw Cen MT Condensed Extra Bold", 0, 18)); // NOI18N
-        btnBack.setForeground(new java.awt.Color(47, 56, 120));
         btnBack.setText("Back");
         btnBack.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(47, 56, 120)));
         btnBack.setContentAreaFilled(false);
         btnBack.setFocusPainted(false);
+        btnBack.setFont(new java.awt.Font("Tw Cen MT Condensed Extra Bold", 0, 18)); // NOI18N
+        btnBack.setForeground(new java.awt.Color(47, 56, 120));
+        btnBack.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnBackActionPerformed(evt);
+            }
+        });
         jPanel1.add(btnBack, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 480, 100, -1));
 
         lblError.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -386,6 +391,12 @@ public class CreateSchoolScreen extends javax.swing.JFrame {
         }
         
     }//GEN-LAST:event_btnCreateSchoolActionPerformed
+
+    private void btnBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBackActionPerformed
+        LoginScreen ls = new LoginScreen();
+        ls.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_btnBackActionPerformed
 
     /**
      * @param args the command line arguments
