@@ -136,6 +136,7 @@ public class AddUserScreen extends javax.swing.JFrame {
         return true;
     }
     
+    
     private void dragDropSetup(){
         final javax.swing.border.Border normalBorder = pnlFile.getBorder();
         final javax.swing.border.Border hoverBorder = javax.swing.BorderFactory.createLineBorder(Color.GREEN, 3);
@@ -197,6 +198,26 @@ public class AddUserScreen extends javax.swing.JFrame {
                 }
             }
         });
+    }
+    
+    private void saveProfilePicture(String filename) {
+        Icon icon = lblPicture.getIcon();
+        if (icon instanceof ImageIcon) {
+            BufferedImage img = (BufferedImage) ((ImageIcon) icon).getImage();
+            
+            File saveDir = new File("data/"+TimetableManager.getSchoolCode() + "/Pictures");
+            if (!saveDir.exists()) {
+                saveDir.mkdirs();
+            }
+            
+            try {
+                File savedFile = new File(saveDir, filename + ".png");
+                ImageIO.write(img, "png", savedFile);
+            } catch (IOException ex) {
+                lblError.setText("Couldn't save picture:\n" + ex.getMessage());
+                lblError.setForeground(Color.red);
+            }
+        }
     }
 
     /**
@@ -365,7 +386,10 @@ public class AddUserScreen extends javax.swing.JFrame {
                 temp = new Student(txfName.getText(), txfSurname.getText(), txfEmail.getText(),
                         txfPassword.getText(), dpDOB.getDate().format(DateTimeFormatter.ofPattern("dd-MM-yyyy")),
                          Integer.parseInt(txfGrSub.getText()), false);
-            }    
+            }
+            if (lblPicture.getIcon() != null) {
+                saveProfilePicture(txfName.getText()+txfSurname.getText());
+            }
             UserManager.addUser(temp);
             lblError.setForeground(Color.GREEN);
             lblError.setText("UserAdded");

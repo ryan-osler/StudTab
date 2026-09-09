@@ -44,7 +44,7 @@ public class MainMenuScreen extends javax.swing.JFrame {
             lblGrade.setText(String.valueOf(UserManager.getCurrentUser().getGrade()));
         }
         
-        String path = "data/"+TimetableManager.getSchoolCode()+"/Pictures/" + UserManager.getCurrentUser().getName()+UserManager.getCurrentUser().getSurname() + ".jpg";
+        String path = "data/"+TimetableManager.getSchoolCode()+"/Pictures/" + UserManager.getCurrentUser().getName()+UserManager.getCurrentUser().getSurname() + ".png";
         
         File imgFile = new File(path);
         if (imgFile.exists()) {
