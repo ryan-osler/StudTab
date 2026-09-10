@@ -241,6 +241,7 @@ public class InsertTimetableFileScreen extends javax.swing.JFrame {
         txaFilePreview = new javax.swing.JTextPane();
         btnSave = new javax.swing.JButton();
         btnClose = new javax.swing.JToggleButton();
+        lblFormat = new javax.swing.JLabel();
         lblBackground = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -294,6 +295,12 @@ public class InsertTimetableFileScreen extends javax.swing.JFrame {
             }
         });
         jPanel1.add(btnClose, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 360, 90, -1));
+
+        lblFormat.setFont(new java.awt.Font("Tw Cen MT Condensed Extra Bold", 0, 12)); // NOI18N
+        lblFormat.setForeground(new java.awt.Color(47, 56, 120));
+        lblFormat.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblFormat.setText("Format:day#email#1#subject1%subject2%subject3%subject4%subject5%subject6");
+        jPanel1.add(lblFormat, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 30, 380, -1));
 
         lblBackground.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/loginBackground.png"))); // NOI18N
         lblBackground.setText("jLabel1");
@@ -393,6 +400,7 @@ public class InsertTimetableFileScreen extends javax.swing.JFrame {
     private javax.swing.JLabel lblBackground;
     private javax.swing.JLabel lblDropFileHere;
     private javax.swing.JLabel lblError;
+    private javax.swing.JLabel lblFormat;
     private javax.swing.JPanel pnlDropFile;
     private javax.swing.JTextPane txaFilePreview;
     // End of variables declaration//GEN-END:variables

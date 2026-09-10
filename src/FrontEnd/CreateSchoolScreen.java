@@ -97,18 +97,23 @@ public class CreateSchoolScreen extends javax.swing.JFrame {
                 txfPassword.getText().trim().isEmpty() || txfSchoolName.getText().trim().isEmpty() || 
                 txfSchoolCode.getText().trim().isEmpty() || txfSubject.getText().trim().isEmpty() || dpDOB.getDate() == null || 
                 dpFoundingDate.getDate() == null) {
+            System.out.println("Error: Missing Data");
             return false;
         }
         else if (!txfEmail.getText().matches(emailRegex)) {//checking email format with regex
             lblError.setText("Incorrect Email Format");
+            System.out.println("Incorrect Email Format");
             return false;
         }else if (txfName.getText().contains("#") || txfSurname.getText().contains("#") || txfEmail.getText().contains("#") || 
                 txfPassword.getText().contains("#") || txfSchoolName.getText().contains("#") || 
                 txfSchoolCode.getText().contains("#") || txfSubject.getText().contains("#")) {
+            System.out.println("Contains a #");
+            lblError.setText("Error, Cant contain a #");
             return false;//preventing syntax injection.
         }else if (!txfSchoolCode.getText().trim().substring(0,3).matches("^[A-Za-z]+$")
                 || !txfSchoolCode.getText().trim().substring(3).matches("^[0-9]+$")) {
             lblError.setText("Incorrect Code Format \"AAA000\"");
+            System.out.println("\"Incorrect Code Format \\\"AAA000\\\"\"");
             return false;//checking format for 
         }
         return true;
@@ -375,9 +380,8 @@ public class CreateSchoolScreen extends javax.swing.JFrame {
                             + txfSurname.getText() + "\nDate Of Birth: " + dpDOB.getDate().format(DateTimeFormatter.ofPattern("dd-MM-yyyy"))
                             + "\nSubject: " + txfSubject.getText());
                 
-                    LoginScreen ls = new LoginScreen();
-                    ls.setVisible(true);
-                    this.dispose();
+                    lblError.setForeground(Color.GREEN);
+                    lblError.setText("Success: School Created");
                 }else{
                     System.out.println("School Code In Use");
                     lblError.setText("SchoolCode in use");
