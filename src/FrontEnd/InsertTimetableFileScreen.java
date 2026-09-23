@@ -15,13 +15,13 @@ import javax.swing.border.LineBorder;
  *
  * @author ryano
  */
-
 public class InsertTimetableFileScreen extends javax.swing.JFrame {
 
     /**
      * Creates new form InsertTimetableFileScreen
      */
     private MainMenuScreen mainMenu;
+
     public InsertTimetableFileScreen() {
         initComponents();
         setLocationRelativeTo(null);
@@ -31,8 +31,8 @@ public class InsertTimetableFileScreen extends javax.swing.JFrame {
         txaFilePreview.setVisible(false);
         btnSetup();
     }
-    
-    public InsertTimetableFileScreen(MainMenuScreen mm){
+
+    public InsertTimetableFileScreen(MainMenuScreen mm) {
         initComponents();
         this.mainMenu = mm;
         setLocationRelativeTo(null);
@@ -42,183 +42,180 @@ public class InsertTimetableFileScreen extends javax.swing.JFrame {
         txaFilePreview.setVisible(false);
         btnSetup();
     }
-    
-    private void btnSetup(){//hovver effect for buttons. this shiz took so long
-        Color norm = new Color(47,56,120);
+
+    private void btnSetup() {//hovver effect for buttons. this shiz took so long
+        Color norm = new Color(47, 56, 120);
         btnSave.addMouseListener(new java.awt.event.MouseAdapter() {
             @Override
-            public void mouseEntered(java.awt.event.MouseEvent evt){
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
                 btnSave.setForeground(Color.WHITE);
                 btnSave.setBorder(new LineBorder(Color.WHITE));
             }
+
             @Override
-            public void mouseExited(java.awt.event.MouseEvent evt){
+            public void mouseExited(java.awt.event.MouseEvent evt) {
                 btnSave.setForeground(norm);
                 btnSave.setBorder(new LineBorder(norm));
             }
+
             @Override
             public void mousePressed(java.awt.event.MouseEvent evt) {
                 btnSave.setForeground(norm);
                 btnSave.setBorder(new LineBorder(norm));
             }
+
             @Override
-            public void mouseReleased(java.awt.event.MouseEvent evt){
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
                 if (btnSave.contains(evt.getPoint())) {
                     btnSave.setForeground(Color.WHITE);
                     btnSave.setBorder(new LineBorder(Color.WHITE));
-                }else{
+                } else {
                     btnSave.setForeground(norm);
                     btnSave.setBorder(new LineBorder(norm));
                 }
-                
+
             }
         });
         btnClose.addMouseListener(new java.awt.event.MouseAdapter() {
             @Override
-            public void mouseEntered(java.awt.event.MouseEvent evt){
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
                 btnClose.setForeground(Color.WHITE);
                 btnClose.setBorder(new LineBorder(Color.WHITE));
             }
+
             @Override
-            public void mouseExited(java.awt.event.MouseEvent evt){
+            public void mouseExited(java.awt.event.MouseEvent evt) {
                 btnClose.setForeground(norm);
                 btnClose.setBorder(new LineBorder(norm));
             }
+
             @Override
             public void mousePressed(java.awt.event.MouseEvent evt) {
                 btnClose.setForeground(norm);
                 btnClose.setBorder(new LineBorder(norm));
             }
+
             @Override
-            public void mouseReleased(java.awt.event.MouseEvent evt){
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
                 if (btnClose.contains(evt.getPoint())) {
                     btnClose.setForeground(Color.WHITE);
                     btnClose.setBorder(new LineBorder(Color.WHITE));
-                }else{
+                } else {
                     btnClose.setForeground(norm);
                     btnClose.setBorder(new LineBorder(norm));
                 }
-                
+
             }
         });
     }
+
     private boolean isValidTimetableFormat(String content) {
-        
+
         if (content == null || content.trim().isEmpty()) {
             return false;
         }
-        
-        // Regex breakdown: lowkey, ai made this regex
-        // ^(\d+)                -> group 1: id (row index)
-        // #                     -> literal separator
-        // ([\w.+-]+@[\w-]+\.[a-zA-Z]{2,})  -> group 2: email address
-        // #                     -> literal separator
-        // (\d+)                 -> group 3: day number
-        // #                     -> literal separator
-        // ([\w]+(%[\w]+)*)$     -> group 4: periods separated by %
-        String lineRegex = "^(\\d+)#([\\w.+-]+@[\\w-]+\\.[a-zA-Z]{2,})#(\\d+)#([\\w]+(%[\\w]+)*)$";
+
+        // Regex breakdown:
+        // ^(\d+)                    -> group 1: row id (unused, not validated)
+        // #                         -> literal separator
+        // ([\w.+-]+@[\w-]+(\.[\w-]+)*\.[a-zA-Z]{2,})  -> group 2: email (supports multi-part domains like .co.za)
+        // #                         -> literal separator
+        // (\d+)                     -> group 3: day number
+        // #                         -> literal separator
+        // ([\w]+(%[\w]+)*)$         -> group 4: periods separated by %
+        String lineRegex = "^(\\d+)#([\\w.+-]+@[\\w-]+(?:\\.[\\w-]+)*\\.[a-zA-Z]{2,})#(\\d+)#([\\w]+(%[\\w]+)*)$";
         java.util.regex.Pattern pattern = java.util.regex.Pattern.compile(lineRegex);
-        
+
         String[] lines = content.split("\\r?\\n");
 
         String expectedEmail = null;
         int expectedPeriodCount = -1;
-        int expectedId = 1; // ids should increment 1,2,3... per row
-        
+
         for (String line : lines) {
-            
+
             line = line.trim();
 
             if (line.isEmpty()) {
-            continue;
+                continue;
             }
-            
+
             java.util.regex.Matcher matcher = pattern.matcher(line);
-            
+
             if (!matcher.matches()) {
                 return false;
             }
-            
-            int id = Integer.parseInt(matcher.group(1));
+
             String email = matcher.group(2);
             int day = Integer.parseInt(matcher.group(3));
             String periodsRaw = matcher.group(4);
-            
-            // id should increment by 1 each row (row 1, row 2, row 3...)
-            if (id != expectedId) {
-                return false;
-            }
-            expectedId++;
-            
+
             // every row should reference the same student email
             if (expectedEmail == null) {
                 expectedEmail = email;
             } else if (!expectedEmail.equals(email)) {
                 return false;
             }
-            
-            // every row should have the same number of periods (e.g. 8 for period0-period7)
+
+            // every row should have the same number of periods (e.g. 7 for period0-period6)
             String[] periods = periodsRaw.split("%");
             if (expectedPeriodCount == -1) {
                 expectedPeriodCount = periods.length;
             } else if (periods.length != expectedPeriodCount) {
                 return false;
             }
-            
+
             // day should be a valid day number (adjust range if your school week differs)
             if (day < 1 || day > 5) {
                 return false;
             }
         }
-        
+
         return expectedEmail != null;
     }
-    
-    private void setupDragDrop(){//This helper method sets up my drag drop file system.
-        
+
+    private void setupDragDrop() {//This helper method sets up my drag drop file system.
+
         final javax.swing.border.Border normalBorder = pnlDropFile.getBorder();
         final javax.swing.border.Border hoverBorder = javax.swing.BorderFactory.createLineBorder(Color.GREEN, 3);
-        new java.awt.dnd.DropTarget(pnlDropFile, new java.awt.dnd.DropTargetAdapter(){
-            
+        new java.awt.dnd.DropTarget(pnlDropFile, new java.awt.dnd.DropTargetAdapter() {
+
             @Override
-            public void dragEnter(java.awt.dnd.DropTargetDragEvent evt){
+            public void dragEnter(java.awt.dnd.DropTargetDragEvent evt) {
                 pnlDropFile.setBorder(hoverBorder);
             }
-            
+
             @Override
-            public void dragExit(java.awt.dnd.DropTargetEvent evt){
+            public void dragExit(java.awt.dnd.DropTargetEvent evt) {
                 pnlDropFile.setBorder(normalBorder);
             }
-            
-            
+
             @Override
-            public void drop(java.awt.dnd.DropTargetDropEvent evt){
+            public void drop(java.awt.dnd.DropTargetDropEvent evt) {
                 pnlDropFile.setBorder(normalBorder); // reset border regardless of outcome
-                
-                try{
+
+                try {
                     evt.acceptDrop(java.awt.dnd.DnDConstants.ACTION_COPY);
-                    
-                    java.util.List<java.io.File> files = (java.util.List<java.io.File>)
-                            evt.getTransferable().getTransferData(java.awt.datatransfer.DataFlavor.javaFileListFlavor);
-                    
+
+                    java.util.List<java.io.File> files = (java.util.List<java.io.File>) evt.getTransferable().getTransferData(java.awt.datatransfer.DataFlavor.javaFileListFlavor);
+
                     if (files.isEmpty()) {//litteraly checks if its empty
                         return;
                     }
                     java.io.File droppedFile = files.get(0);
-                    
+
                     if (!droppedFile.getName().toLowerCase().endsWith(".txt")) {//checkes if its a txt file
                         lblError.setText("Please drop a txt file. =/)/");
                         lblError.setForeground(Color.red);
                         return;
                     }
-                    
+
                     String content = new String(java.nio.file.Files.readAllBytes(droppedFile.toPath()));
                     txaFilePreview.setText(content);
                     lblError.setText("");
                     txaFilePreview.setVisible(true);
                     lblDropFileHere.setVisible(false);
-                }catch(Exception ex){
-                    lblError.setText("Couldn't read file:\n"+ ex.getMessage());
+                } catch (Exception ex) {
+                    lblError.setText("Couldn't read file:\n" + ex.getMessage());
                 }
             }
         });
@@ -317,16 +314,16 @@ public class InsertTimetableFileScreen extends javax.swing.JFrame {
     }//GEN-LAST:event_btnCloseActionPerformed
 
     private void btnSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveActionPerformed
-        
+
         String inTimetables = txaFilePreview.getText();
         int lineCount = inTimetables.split("\n", -1).length;//obtains number of field entries
         Timetable temp[] = new Timetable[lineCount];//used to temorarily store timetable fields
         int count = 0;
-        
+
         if (isValidTimetableFormat(inTimetables)) {
             Scanner scFile = new Scanner(inTimetables);
             boolean allUnique = true;
-            while(scFile.hasNext()){
+            while (scFile.hasNext()) {
                 Scanner scLine = new Scanner(scFile.nextLine()).useDelimiter("#");
                 int ID = scLine.nextInt();
                 String email = scLine.next();
@@ -335,14 +332,14 @@ public class InsertTimetableFileScreen extends javax.swing.JFrame {
                 temp[count] = new Timetable(ID, email, day, lessons);
                 scLine.close();
                 count++;
-                if (TimetableManager.getKeys().contains(email+day)) {//checking to prevent multiple entries
-                    lblError.setText("Email Day combination is taken in day: "+ID);
+                if (TimetableManager.getKeys().contains(email + day)) {//checking to prevent multiple entries
+                    lblError.setText("Email Day combination is taken in day: " + ID);
                     lblError.setForeground(Color.RED);
                     allUnique = false;
                 }
             }
             scFile.close();
-            
+
             if (allUnique) {//finally adding in timetable entries
                 for (int i = 0; i < count; i++) {
                     TimetableManager.addTimetable(temp[i]);
@@ -350,8 +347,8 @@ public class InsertTimetableFileScreen extends javax.swing.JFrame {
                     lblError.setForeground(Color.GREEN);
                 }
             }
-            
-        }else{
+
+        } else {
             lblError.setForeground(Color.RED);
             lblError.setText("Invalid Timetable format.");
         }

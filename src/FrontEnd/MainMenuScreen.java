@@ -37,10 +37,10 @@ public class MainMenuScreen extends javax.swing.JFrame {
         lblDOB.setText(UserManager.getCurrentUser().getDOB());
         lblStudentName.setText(UserManager.getCurrentUser().getName()+" "+UserManager.getCurrentUser().getSurname());
         if (UserManager.getCurrentUser() instanceof Teacher) {
-            lblGradeIcon.setText("Subject");
+            lblGradeIcon.setText("Subject:");
             lblGrade.setText(String.valueOf(UserManager.getCurrentUser().getSubject()));
         }else{
-            lblGradeIcon.setText("Subject");
+            lblGradeIcon.setText("Subject:");
             lblGrade.setText(String.valueOf(UserManager.getCurrentUser().getGrade()));
         }
         
@@ -60,7 +60,6 @@ public class MainMenuScreen extends javax.swing.JFrame {
             System.out.println("Icon Set");
         } else {
             System.out.println("Couldn't locate profile picture: " + path +"\nIcon Set To Defualt.");
-            
         }
         
         btnViewTimetable.setBorder(BorderFactory.createEmptyBorder(10, 20, 10, 20));//rounded edges
@@ -184,6 +183,7 @@ public class MainMenuScreen extends javax.swing.JFrame {
         lblGrade.setText("grade / subject");
         pnlDetails.add(lblGrade, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 50, 90, -1));
 
+        lblProfilePic.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/default_profile.png"))); // NOI18N
         lblProfilePic.setText("Icon");
         pnlDetails.add(lblProfilePic, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 80, 170, 120));
 

@@ -71,6 +71,7 @@ public class LoginScreen extends javax.swing.JFrame {
             UserManager.loadInfo(schoolcode);
             IdleManager.Start();
             
+            
             NotificationManager.setSchoolCode(schoolcode);
             if (NotificationManager.loadInfo()) {
                 System.out.println("Notifications Loaded");
@@ -255,6 +256,8 @@ public class LoginScreen extends javax.swing.JFrame {
                 String password = String.valueOf(psfPassword.getPassword());
                 
                 Student User = UserManager.checkInfo(email, password, schoolCode);
+                user = User;
+                schoolcode = schoolCode;
                 if (User == null) {
                     ///
                     lblError.setText("Incorrect Email or Password");
@@ -264,6 +267,7 @@ public class LoginScreen extends javax.swing.JFrame {
                     UserManager.setCurrentUser(User);
                     TimetableManager.setCurrentUser(User);
                     TimetableManager.setSchoolCode(schoolCode);
+                    UserManager.loadInfo(schoolCode);
                     IdleManager.Start();
                     
                     try {

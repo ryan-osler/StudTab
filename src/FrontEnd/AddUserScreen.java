@@ -47,6 +47,7 @@ public class AddUserScreen extends javax.swing.JFrame {
         this.mainMenu = mm;
         lblError.setText("");
         dragDropSetup();
+        checkBoxSetup();
     }
     
     public AddUserScreen(){
@@ -57,6 +58,20 @@ public class AddUserScreen extends javax.swing.JFrame {
         btnSetup();
         lblError.setText("");
         dragDropSetup();
+        checkBoxSetup();
+    }
+    
+    private void checkBoxSetup(){
+        cbxIsTeacher.addActionListener(new java.awt.event.ActionListener(){
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                if (cbxIsTeacher.isSelected()) {
+                    lblGrSub.setText("Subject:");
+                }else{
+                    lblGrSub.setText("Grade:");
+                }
+                
+            }
+        });
     }
     private void btnSetup(){//hovver effect for buttons. this shiz took so long
         Color norm = new Color(47,56,120);
@@ -289,9 +304,9 @@ public class AddUserScreen extends javax.swing.JFrame {
         lblDOB.setText("Date Of Birth:");
         jPanel1.add(lblDOB, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 240, -1, -1));
 
+        lblGrSub.setText("Grade:");
         lblGrSub.setFont(new java.awt.Font("Tw Cen MT Condensed Extra Bold", 0, 18)); // NOI18N
         lblGrSub.setForeground(new java.awt.Color(47, 56, 120));
-        lblGrSub.setText("Subject:");
         jPanel1.add(lblGrSub, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 300, -1, -1));
 
         cbxIsTeacher.setFont(new java.awt.Font("Tw Cen MT Condensed Extra Bold", 0, 18)); // NOI18N
