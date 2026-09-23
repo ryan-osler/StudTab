@@ -297,6 +297,7 @@ public class AnnouncementScreen extends javax.swing.JFrame {
                             +UserManager.getCurrentUser().getName() + " " + UserManager.getCurrentUser().getSurname()+ " on "
                             + LocalDate.now().format(DateTimeFormatter.ofPattern("dd-MM-yyyy")) +"\n" +txaBody.getText() +"\n\n"
                             + "Email sent to all users by StudTab";
+                    UserManager.sendAllEmail(txfSubject.getText(), body);
                 }else{
                     EmailManager.sendEmail(txfTo.getText(), "New Notification", "A new notification has been published by: " 
                             +UserManager.getCurrentUser().getName() + " " + UserManager.getCurrentUser().getSurname()+ " on " 

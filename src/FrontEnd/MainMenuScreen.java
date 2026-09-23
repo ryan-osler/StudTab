@@ -40,7 +40,7 @@ public class MainMenuScreen extends javax.swing.JFrame {
             lblGradeIcon.setText("Subject:");
             lblGrade.setText(String.valueOf(UserManager.getCurrentUser().getSubject()));
         }else{
-            lblGradeIcon.setText("Subject:");
+            lblGradeIcon.setText("Grade:");
             lblGrade.setText(String.valueOf(UserManager.getCurrentUser().getGrade()));
         }
         
@@ -169,7 +169,7 @@ public class MainMenuScreen extends javax.swing.JFrame {
         lblGradeIcon.setForeground(new java.awt.Color(47, 56, 120));
         lblGradeIcon.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         lblGradeIcon.setText("Grade:");
-        pnlDetails.add(lblGradeIcon, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 50, 40, -1));
+        pnlDetails.add(lblGradeIcon, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 50, -1, -1));
 
         lblDOB.setFont(new java.awt.Font("Tw Cen MT Condensed Extra Bold", 0, 14)); // NOI18N
         lblDOB.setForeground(new java.awt.Color(47, 56, 120));
