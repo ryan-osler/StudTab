@@ -261,4 +261,13 @@ public class UserManager {//establish fields
             EmailManager.sendEmail(userArr[i].getEmail(), inSubject, inBody);
         }
     }
+    
+    public void increaseGrades(){
+        for (int i = 0; i < userArr.length; i++) {
+            if (!(userArr[i] instanceof Teacher)) {
+                userArr[i].setGrade(userArr[i].getGrade() + 1);
+            }
+        }
+        updateFile();
+    }
 }

@@ -127,4 +127,8 @@ public class Student {
     public String getSubject() {//students cannot have subjects. method overriden in child class
         return "Error";
     }
+    
+    public void setGrade(int inGrade){
+        grade = inGrade;
+    }
 }
